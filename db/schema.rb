@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220417035652) do
+ActiveRecord::Schema.define(version: 20220417090642) do
+
+  create_table "attendances", force: :cascade do |t|
+    t.date "worked_on"
+    t.datetime "started_at"
+    t.datetime "finished_at"
+    t.string "note"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_attendances_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
@@ -21,6 +32,9 @@ ActiveRecord::Schema.define(version: 20220417035652) do
     t.datetime "updated_at", null: false
     t.string "remember_digest"
     t.boolean "admin"
+    t.string "department"
+    t.datetime "basic_time", default: "2022-04-17 08:00:00"
+    t.datetime "work_time", default: "2022-04-17 07:30:00"
   end
 
 end
