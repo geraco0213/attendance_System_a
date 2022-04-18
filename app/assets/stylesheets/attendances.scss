@@ -1,3 +1,22 @@
-// Place all the styles related to the attendances controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+#attendance-edit-table{
+  th{
+    text-align:center;
+  }
+  
+  td{
+    text-align:center;
+  }
+}
+
+
+.edit-btn-wrapper{
+  text-align:center;
+}
+
+.btn-cancel{
+  width:160px;
+}
+
+.btn-go{
+  width:160px;
+}
