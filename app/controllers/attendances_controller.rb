@@ -44,10 +44,37 @@ class AttendancesController < ApplicationController
   end
 
   
+  def new_overwork
+    @user=User.find(params[:id])
+    @attendance=Attendance.find(params[:id])
+    @superior=User.where(superior:true).where.not(id:current_user.id)
+  end
+  
+  
+  def create_overwork
+    #ここにdebugger入れると、ちゃんとparamsの中に、idと残業時間〜上司の情報が入っている。#
+    @user=User.find(params[:id])
+    @attendance=Attendance.find(params[:id])
+    #ここにdebugger入れると@userと@attendanceの情報あるが、idと残業時間〜上司の情報が入っていない#
+    if @attendance.instructor_test.blank?
+      flash[:warning]="必須箇所が空欄です"
+      redirect_to @user
+    else
+      @attendance.update_attributes(over_params)
+      flash[:success]="残業申請が完了しました"
+      redirect_to @user and return
+    end
+  end
+
+  
   
   private
     def attendances_params
       params.require(:user).permit(attendances:[:started_at, :finished_at, :note])[:attendances]
     end
-      
+    
+    def over_params
+      params.require(:attendance).premit(:scheduled_end_time,:business_outline,:instructor_test)
+    end
+    
 end

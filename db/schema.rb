@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20220419071146) do
     t.datetime "updated_at", null: false
     t.datetime "scheduled_end_time"
     t.string "business_outline"
-    t.integer "instructor_test"
+    t.string "instructor_test"
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 

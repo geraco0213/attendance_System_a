@@ -31,7 +31,6 @@ class UsersController < ApplicationController
   
   def show
     @worked_sum = @attendances.where.not(started_at:nil).count
-    @superior=User.where(superior:true).where.not(id:current_user.id)
   end
     
   
@@ -52,6 +51,7 @@ class UsersController < ApplicationController
     flash[:danger]="#{@user.name}を削除しました"
     redirect_to users_url
   end
+  
   
   
   #以下基本情報系はまだ#
