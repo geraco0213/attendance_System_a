@@ -30,6 +30,7 @@
   <table class="table table-bordered table-striped" id="user-attendance-table" >
     <thead>
       <tr>
+        <th rowspan="3">残業申請</th>
         <th rowspan="3">日付</th>
         <th rowspan="3">曜日</th>
         <th colspan="8">【実績】</th>  <%# ３行目のthの数も含める#%>
@@ -59,6 +60,7 @@
     <tbody>
       <% @attendances.each do |day| %>
         <tr>
+          <td><%=link_to "残業申請", '#', class:"btn btn-primary" %></td>
           <td><%=l(day.worked_on, format: :short) %></td>
           <td><%=$days_of_the_week[day.worked_on.wday] %></td>
           <td><%=l(day.started_at, format: :hour) if day.started_at.present? %></td>
@@ -95,6 +97,42 @@
       </tr>
     </tfoot>
   </table>
+  
+  <!-- 残業申請フォーム -->
+    <%= @attendances.each do |day| %>
+        <h3>残業申請</h3>
+        <%= form_with(model:day, url: '#', method: :post) do |f| %>
+        <%= f.hidden_field :id, :value => day.id %> <!-- attendancesテーブルのidを渡す -->
+        <%= f.hidden_field :user_id, :value => @user.id %>
+          <table class="table table-bordered table-striped table-condensed">
+            <thead>
+              <tr>
+                <th>日付</th>
+                <th>曜日</th>
+                <th>終了時間（必須）</th>
+                <th>業務内容</th>
+                <th>確認（必須）</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <!-- 日付 -->
+                <td><%= day.worked_on %></td>
+                <!-- 曜日 -->
+                <td><%= $days_of_the_week[day.worked_on.wday] %></td>
+                <!-- 終了時間 -->
+                <td><%= f.time_field :scheduled_end_time, class: 'form-control' %> </td>
+                <!-- 業務内容 -->
+                <td><%= f.text_field :business_outline, class: 'form-control' %></td>
+                <!-- 確認 -->
+                <td><%= f.collection_select(:indicater_test, @superior, :name, :name, {include_blank:"上長を選択して下さい"}, {class: "form-control", required: true }) %></td>
+              </tr>
+            </tbody>
+          </table>
+          <%= f.submit "残業を申請する", class: "btn btn-sm btn-primary" %>
+        <% end %>
+    <% end %>
+
 
 
     
