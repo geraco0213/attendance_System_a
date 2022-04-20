@@ -60,7 +60,7 @@
     <tbody>
       <% @attendances.each do |day| %>
         <tr>
-          <td><%=link_to "残業申請", attendances_new_overwork_user_path(day), class:"btn btn-primary" %></td>
+          <td><%=link_to "残業申請", edit_overtime_request_user_attendance_path(@user,day), class:"btn btn-primary" %></td>
           <td><%=l(day.worked_on, format: :short) %></td>
           <td><%=$days_of_the_week[day.worked_on.wday] %></td>
           <td><%=l(day.started_at, format: :hour) if day.started_at.present? %></td>
