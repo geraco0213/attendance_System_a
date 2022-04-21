@@ -23,3 +23,61 @@
     text-align:center;
   }
 }
+
+
+/*モーダル*/
+
+.modal-daialog-center{
+  padding-top:10%;
+}
+
+.label-basic-info {
+  margin-top: 5px;
+}
+
+.btn-basic-info {
+  margin: 15px 0;
+  width: 30%;
+}
+
+
+#overtime-request-table{
+  th{
+    text-align:center;
+    white-space:nowrap;
+  }
+  
+  td{
+    text-align:center;
+  }
+}
+
+
+
+/* 円の基本形 */
+.maru {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  flex-flow: column; 
+  
+}
+
+/* 円の大きさ（文字のwidthとheightより少し大きめに設定)*/
+.size_small{
+  width: 15px;
+  height: 15px;
+}
+
+/* 円の色 */
+.black {
+  border: 1px solid black;
+}
+
+
+/*文字の大きさ*/
+.letter{
+  font-size:10px;
+
+}
