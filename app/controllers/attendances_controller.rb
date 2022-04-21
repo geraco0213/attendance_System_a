@@ -48,23 +48,23 @@ class AttendancesController < ApplicationController
   def edit_overtime_request
     @user = User.find(params[:user_id])
     @attendance=@user.attendances.find(params[:id])
-    @superior=User.where(superior:true).where.not(id:current_user.id)
+    @superior=User.where(superior:true).where.not(id:@user.id)
   end
   
   #残業の申請内容が送信されるページ#
   def update_overtime_request
-    @user= user.find(params[:user_id])
-    @aatendance= @user.attendances.find(params[:id])
+    @user= User.find(params[:user_id])
+    @attendance= @user.attendances.find(params[:id])
     if @attendance.update_attributes(overtime_params)
-      flash[:success]="残業申請を受け付けました"
-    　redirect_to user_url(@user)
+       flash[:success]="残業申請を受け付けました"
     end
+    redirect_to user_url(@user)
   end
   
   
   #残業の申請内容を見て承認するページ#
   def edit_overtime_notice
-    @user=User.find(params[:user_id])
+    @user=User.find(params[:id])
     @attendances=Attendance.where(instructor_test:@user.name)
   end
   
@@ -80,7 +80,7 @@ class AttendancesController < ApplicationController
     end
     
     def overtime_params
-      params.require(:attendance).premit(:scheduled_end_time,:business_outline,:tomorrow,:instructor_test)
+      params.require(:attendance).permit(:scheduled_end_time,:business_outline,:tomorrow,:instructor_test)
     end
     
 end

@@ -1,0 +1,41 @@
+<%= form_with(model:@user, url:'#', method: :patch) do |f| %>
+	<% @attendances.each do |id, attendance| %>
+	  <% user=User.find(id) %>
+		<table class="table table-bordered table-condensed" id="overtime-notice-table" %>
+			
+			<thead>
+				<th>日付</th>
+				<th>曜日</th>
+				<th>終了予定時間</th>
+				<th>指定勤務終了時間</th>
+				<th>時間外時間</th>
+				<th>業務処理内容</th>
+				<th>指示者確認</th>
+					<div class="maru size_small black">
+						<div class="leter">印</div>
+					</div>
+				</th>
+				<th>変更</th>
+				<th>勤務を確認する</th>
+			</thead>
+			
+			<% attendance.each do |day| %>
+			  <%= f.fields_for "attendance[]", day do |d| %>
+			  
+			    <tbody>
+			    	<td><%=l(day.worked_on, format: :short) %></td>
+			      <td><%=$days_of_the_week[day.worked_on.wday] %></td>
+			      <td><%=day.scheduled_end_time %></td>
+			      <td><%=user.fixed_finish %></td>
+			      <td></td>
+			      <td><%=day.business_outline %></td>
+			      <td><%=d.select:indicator_reply, {'なし':1, '申請中':2, '承認':3, '否認':4},{include_blank:true}, {class:"form-control"} %></td>
+			      <td><%=d.check_box :change, id:"change" %></td>
+			      <td></td>
+			    </tbody>
+			  <% end %>
+			<% end %>
+		</table>
+		<%= f.submit "変更を送信する", class:"btn btn-primary" %>
+	<% end %>
+<% end %>

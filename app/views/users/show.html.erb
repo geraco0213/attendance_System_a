@@ -24,7 +24,7 @@
   </table>
   <!--上長の場合は、以下に申請を見るページへのリンク-->
   <% if current_user.superior? %>
-    <%=link_to "【残業申請のお知らせ】", edit_overtime_notice_user_attendances_path(@user) %>
+    <%=link_to "【残業申請のお知らせ】", attendances_edit_overtime_notice_user_path(@user) %>
   <% end %>
   <!--ボタン各種-->
   <div class="btn-wrapper">
