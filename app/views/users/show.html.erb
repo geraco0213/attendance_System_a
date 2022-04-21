@@ -22,7 +22,11 @@
       </tr>
     </tbody>
   </table>
-  
+  <!--上長の場合は、以下に申請を見るページへのリンク-->
+  <% if current_user.superior? %>
+    <%=link_to "【残業申請のお知らせ】", edit_overtime_notice_user_attendances_path(@user) %>
+  <% end %>
+  <!--ボタン各種-->
   <div class="btn-wrapper">
     <%=link_to "勤怠を編集", attendances_edit_one_month_user_path(date:@first_day), class: "btn btn-primary" %>
   </div>
@@ -33,7 +37,7 @@
         <th rowspan="3">残業申請</th>
         <th rowspan="3">日付</th>
         <th rowspan="3">曜日</th>
-        <th colspan="8">【実績】</th>  <%# ３行目のthの数も含める#%>
+        <th colspan="8">【実績】</th>
         <th colspan="5">所定外勤務</th>
       </tr>
       <tr>

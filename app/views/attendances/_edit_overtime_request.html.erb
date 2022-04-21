@@ -30,10 +30,10 @@ label="Close">
                 <tr>
                   <td><%= l(@attendance.worked_on, format: :short) %></td>
                   <td><%= $days_of_the_week[@attendance.worked_on.wday] %></td>
-                  <td><%= f.time_field :scheduled_end_time, class: 'form-control' %> </td>
+                  <td><%= f.time_select :scheduled_end_time, class: 'form-control' %> </td>
                   <td><%= f.check_box :tomorrow,id: "tomorrow" %></td>
                   <td><%= f.text_field :business_outline, class: 'form-control' %></td>
-                  <td><%= f.collection_select(:instructor_test, @superior, :name, :name, {include_blank:true}, {class: "form-control", required: true }) %></td>
+                  <td><%= f.collection_select(:instructor_test, @superior,:name, :name,{include_blank:true}, {class: "form-control", required: true }) %></td>
                 </tr>
               </tbody>
             </table>

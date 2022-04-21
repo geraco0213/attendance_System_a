@@ -20,6 +20,9 @@ Rails.application.routes.draw do
         get 'edit_overtime_request'
         patch 'update_overtime_request'
       end
+      
+      get 'edit_overtime_notice'
+      patch 'update_overtime_notice'
     end
   end
   
