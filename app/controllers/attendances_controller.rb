@@ -70,6 +70,7 @@ class AttendancesController < ApplicationController
   
   #残業の承認内容が送信されるページ#
   def update_overtime_notice
+  
   end
   
   
