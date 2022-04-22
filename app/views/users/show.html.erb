@@ -23,12 +23,14 @@
     </tbody>
   </table>
   <!--上長の場合は、以下に申請を見るページへのリンク-->
-  <% if current_user.superior? %>
-    <%=link_to "【残業申請のお知らせ】", attendances_edit_overtime_notice_user_path(@user) %>
+  <% if current_user.superior? && current_user?(@user) %>
+    <%=link_to "【残業申請のお知らせ】", attendances_edit_overtime_notice_user_path %>
   <% end %>
   <!--ボタン各種-->
   <div class="btn-wrapper">
-    <%=link_to "勤怠を編集", attendances_edit_one_month_user_path(date:@first_day), class: "btn btn-primary" %>
+    <% if current_user?(@user) %>
+      <%=link_to "勤怠を編集", attendances_edit_one_month_user_path(date:@first_day), class: "btn btn-primary" %>
+    <% end %>
   </div>
   
   <table class="table table-bordered table-striped" id="user-attendance-table" >
@@ -48,7 +50,11 @@
         <th colspan="2">終了予定時間</th>
         <th rowspan="2">時間外時間</th>
         <th rowspan="2">業務処理内容</th>
-        <th rowspan="2">指示者確認✔</th>　
+        <th rowspan="2">指示者確認
+          <div class="maru size_small black">
+            <div class="letter">印</div>
+          </div>
+        </th>　
       </tr>
       <tr>
         <th>時</th>
@@ -86,9 +92,24 @@
           <td><%= day.note %></td>
           <td></td>
           <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>
+            <% if day.change? %>
+              <%=working_times(@user.fixed_finish, day.scheduled_end_time) %>
+            <% end %>
+          </td>
+          <td>
+            <% if day.change? %>
+              <%=day.business_outline %>
+            <% end %>
+          <td>
+            <% if day.change? %>
+              <% if day.instructor_reply==3%>
+                残業承認済
+              <% elsif day.instructor_reply==4%>
+                残業否認
+              <% end %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>
