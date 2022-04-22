@@ -65,7 +65,7 @@ class AttendancesController < ApplicationController
   #残業の申請内容を見て承認するページ#
   def edit_overtime_notice
     @user=User.find(params[:id])
-    @attendances=Attendance.where(instructor_test:@user.name)
+    @attendances=Attendance.where(instructor_test:@user.name).where(change:false)
   end
   
   #残業の承認内容が送信されるページ#

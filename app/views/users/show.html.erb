@@ -24,7 +24,7 @@
   </table>
   <!--上長の場合は、以下に申請を見るページへのリンク-->
   <% if current_user.superior? && current_user?(@user) %>
-    <%=link_to "【残業申請のお知らせ】", attendances_edit_overtime_notice_user_path %>
+    <%=link_to "【残業申請のお知らせ】", attendances_edit_overtime_notice_user_path, remote:true %>
   <% end %>
   <!--ボタン各種-->
   <div class="btn-wrapper">
@@ -128,7 +128,10 @@
 hidden="true"></div>
 
 
-  
+<!--モーダルウインドウ表示-->
+<div id="edit-overtime-notice" class="modal fade" tabindex="-1" role="dialog" aria-
+hidden="true"></div>
+
 
 
     
