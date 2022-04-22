@@ -22,7 +22,7 @@
       </tr>
     </tbody>
   </table>
-  <!--上長の場合は、以下に申請を見るページへのリンク-->
+  <!--上長のページの場合は、以下に申請を見るページへのリンク-->
   <% if current_user.superior? && current_user?(@user) %>
     <% if @requested_attendances.count>0 %>
       <%=link_to "【残業申請のお知らせ】#{@requested_attendances.count}件の通知があります", attendances_edit_overtime_notice_user_path, remote:true, class:"notice-sentence"%>
@@ -94,13 +94,9 @@
             <% end %>
           </td>
           <td><%= day.note %></td>
-          <td></td>
-          <td></td>
-          <td>
-            <% if day.change? %>
-              <%=working_times(@user.fixed_finish, day.scheduled_end_time) %>
-            <% end %>
-          </td>
+          <td><%= day.scheduled_end_time%></td>
+          <td><%= day.scheduled_end_time%></td>
+          <td></td>                                   <!--残業終了時間-->
           <td><%=day.business_outline %></td>
           <td>
             <% if day.instructor_test.present? && !day.change? %>

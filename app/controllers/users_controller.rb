@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   before_action :admin_user, only:[:index,:destroy]
   before_action :admin_or_correct_or_superior_user, only: :show  #superiorを追記#
   before_action :set_one_month, only: :show
-  before_action :requested, only: :show
+  before_action :requested, only: :show  #追記した#
   
   def new
     if logged_in?
