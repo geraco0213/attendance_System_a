@@ -24,7 +24,11 @@
   </table>
   <!--上長の場合は、以下に申請を見るページへのリンク-->
   <% if current_user.superior? && current_user?(@user) %>
-    <%=link_to "【残業申請のお知らせ】", attendances_edit_overtime_notice_user_path, remote:true %>
+    <% if @requested_attendances.count>0 %>
+      <%=link_to "【残業申請のお知らせ】#{@requested_attendances.count}件の通知があります", attendances_edit_overtime_notice_user_path, remote:true, class:"notice-sentence"%>
+    <% else %>
+      <p class="notice-sentence">【残業申請のお知らせ】０件の通知があります</p>
+    <% end %>
   <% end %>
   <!--ボタン各種-->
   <div class="btn-wrapper">
@@ -103,9 +107,9 @@
               <%=day.instructor_test %>に申請中
             <% end %>
             <% if day.change? %>
-              <% if day.instructor_reply==3%>
+              <% if day.instructor_reply==2%>
                 残業承認済
-              <% elsif day.instructor_reply==4%>
+              <% elsif day.instructor_reply==3%>
                 残業否認
               <% end %>
             <% end %>

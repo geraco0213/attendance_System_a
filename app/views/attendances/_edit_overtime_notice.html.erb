@@ -40,7 +40,7 @@
 		    	    <td><%=l(@user.fixed_finish, format: :time) %></td>
 		 	        <td><%=working_times(@user.fixed_finish, day.scheduled_end_time) %></td>
 			        <td><%=day.business_outline %></td>
-			        <td><%=d.select:instructor_reply, {'なし':1, '申請中':2, '承認':3, '否認':4},{include_blank:true}, {class:"form-control"} %></td>
+			        <td><%=d.select:instructor_reply, {'なし':1, '承認':2, '否認':3},{include_blank:"申請中"}, {class:"form-control"} %></td>
 			        <td><%=d.check_box :change, id:"change" %></td>
 			        <td><%=link_to "勤怠を確認する", user_path(day.user), class:"btn btn-primary"%></td>
 		        <% end %>

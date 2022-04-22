@@ -83,6 +83,8 @@ class AttendancesController < ApplicationController
     flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
     redirect_to attendances_edit_overtime_notice_user_url
   end
+  
+  
 
     
   

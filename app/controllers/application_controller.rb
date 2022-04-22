@@ -58,5 +58,10 @@ class ApplicationController < ActionController::Base
   end
   
   
+  def requested
+    @requested_attendances=Attendance.where(instructor_test:@user.name).where(change:false)
+  end
+
+    
 end
 
