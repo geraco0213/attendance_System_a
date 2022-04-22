@@ -97,11 +97,11 @@
               <%=working_times(@user.fixed_finish, day.scheduled_end_time) %>
             <% end %>
           </td>
+          <td><%=day.business_outline %></td>
           <td>
-            <% if day.change? %>
-              <%=day.business_outline %>
+            <% if day.instructor_test.present? && !day.change? %>
+              <%=day.instructor_test %>に申請中
             <% end %>
-          <td>
             <% if day.change? %>
               <% if day.instructor_reply==3%>
                 残業承認済
