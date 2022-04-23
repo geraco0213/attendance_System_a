@@ -22,4 +22,8 @@ class Attendance < ApplicationRecord
     end
   end
   
+  #以下、残業系を追記#
+  validates :scheduled_end_time, presence:true
+  validates :business_outline, presence:true, length:{maximum:50}
+  
 end
