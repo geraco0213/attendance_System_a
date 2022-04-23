@@ -55,10 +55,11 @@ class AttendancesController < ApplicationController
   def update_overtime_request
     @user= User.find(params[:user_id])
     @attendance= @user.attendances.find(params[:id])
-    if @attendance.update_attributes(overtime_request_params)
-       flash[:success]="残業申請を受け付けました"
-    else 
+    if params[:attendance][:scheduled_end_time].blank? || params[:attendance][:business_outline].blank?
       flash[:danger]="入力に不備があり、申請をキャンセルしました"
+    else
+      @attendance.update_attributes(overtime_request_params)
+      flash[:success]="残業申請を受け付けました"
     end
     redirect_to user_url(@user) 
   end
