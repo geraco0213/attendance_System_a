@@ -94,9 +94,9 @@
             <% end %>
           </td>
           <td><%= day.note %></td>
-          <td><%= day.scheduled_end_time%></td>
-          <td><%= day.scheduled_end_time%></td>
-          <td></td>                                   <!--残業終了時間-->
+          <td><%=l(day.scheduled_end_time, format: :hour) if day.instructor_test.present? %></td>
+          <td><%=l(day.scheduled_end_time, format: :minute) if day.instructor_test.present? %></td>
+          <td><%=working_times(@user.fixed_finish, day.scheduled_end_time) if day.instructor_test.present?%></td>
           <td><%=day.business_outline %></td>
           <td>
             <% if day.instructor_test.present? && !day.change? %>
