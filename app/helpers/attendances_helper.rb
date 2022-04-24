@@ -14,7 +14,23 @@ module AttendancesHelper
   end
   
   
-  
+  def attendance_invalid?
+    attendances=true
+    attendances_params.each do |id, item| 
+      if item[:started_at].blank? && item[:finished_at].blank? && item[:instructor_one_month_test].blank?
+        next
+      elsif item[:started_at].present? && item[:finished_at].present? && item[:instructor_one_month_test].present?
+        next
+      elsif item[:started_at].present? || item[:finished_at].present?
+        attendances=false
+        break
+      elsif item[:started_at].present? && item[:finished_at].present? && item[:instructor_one_month_test].blank?
+        attendances=false
+        break
+      end
+    end
+    return attendances
+  end
   
   
 end

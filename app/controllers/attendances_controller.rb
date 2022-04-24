@@ -1,4 +1,6 @@
 class AttendancesController < ApplicationController
+  include AttendancesHelper
+  
   before_action :set_user, only:[:edit_one_month_request,:update_one_month_request]
   before_action :logged_in_user, only:[:update,:edit_one_month_request,:update_one_month_request] 
   before_action :admin_or_correct_or_superior_user, only:[:update,:edit_one_month_request,:update_one_month_request]  #superiorを追記#
@@ -32,18 +34,22 @@ class AttendancesController < ApplicationController
   
   #１か月の勤怠編集の申請内容が送信されるページ#
   def update_one_month_request
-    ActiveRecord::Base.transaction do
-      attendances_params.each do |id, item|
-        attendance = Attendance.find(id)
-        attendance.update_attributes!(item)
-      end
-    end
-    flash[:success] = "1ヶ月分の勤怠情報を申請しました。"
-    redirect_to user_url(date: params[:date])
+      ActiveRecord::Base.transaction do
+        if attendance_invalid?
+          attendances_params.each do |id, item|
+            attendance = Attendance.find(id)
+            attendance.update_attributes!(item)
+          end
+            flash[:success] = "1ヶ月分の勤怠情報を申請しました。"
+            redirect_to user_url(date: params[:date])
+        else
+          flash[:danger] = "無効な入力データがあった為、申請をキャンセルしました。"
+          redirect_to attendances_edit_one_month_request_user_url(date: params[:date])
+        end
+      end 
   rescue ActiveRecord::RecordInvalid 
     flash[:danger] = "無効な入力データがあった為、申請をキャンセルしました。"
-    redirect_to attendances_edit_one_month_user_url(date: params[:date])
-  
+    redirect_to attendances_edit_one_month_request_user_url(date: params[:date])
   end
   
   #１か月の勤怠編集の申請内容を見て承認するページ＃
