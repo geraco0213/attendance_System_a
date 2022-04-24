@@ -27,6 +27,9 @@ module AttendancesHelper
       elsif item[:started_at].present? && item[:finished_at].present? && item[:instructor_one_month_test].blank?
         attendances=false
         break
+      elsif item[:started_at].blank? && item[:finished_at].blank? && item[:instructor_one_month_test].present?
+        attendances=false
+        break
       end
     end
     return attendances

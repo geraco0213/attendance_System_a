@@ -24,6 +24,10 @@
   </table>
   <!--上長のページの場合は、以下に申請を見るページへのリンク-->
   <% if current_user.superior? && current_user?(@user) %>
+    
+  
+  
+  
   
     <% if @one_month_requested_attendances.count>0 %>
       <%=link_to "【勤怠編集のお知らせ】", attendances_edit_one_month_notice_user_path, remote:true, class:"notice-sentence"%>
@@ -114,6 +118,10 @@
                 残業承認済
               <% elsif day.instructor_reply==3%>
                 残業否認
+              <% elsif day.instructor_reply==1%>
+                <%=day.instructor_test %>に残業申請中
+              <% elsif day.instructor_reply==4%>
+                <%=day.instructor_test %>に残業申請中
               <% end %>
             <% end %>
     
@@ -124,6 +132,10 @@
                 勤怠編集承認済
               <% elsif day.instructor_one_month_reply==3%>
                 勤怠編集否認
+              <% elsif day.instructor_one_month_reply==1%>
+                <%=day.instructor_one_month_test %>に残業申請中
+              <% elsif day.instructor_one_month_reply==4%>
+                <%=day.instructor_one_month_test %>に残業申請中
               <% end %>
             <% end %>
           </td>
@@ -136,6 +148,9 @@
         <td colspan="6"></td>
         <td><%= format("%.2f", @total_working_times.to_f) %></td>
         <td colspan="6"></td>
+        <td>
+          所属長承認　未
+        </td>
       </tr>
     </tfoot>
   </table>

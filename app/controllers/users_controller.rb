@@ -31,8 +31,10 @@ class UsersController < ApplicationController
   
   def show
     @worked_sum = @attendances.where.not(started_at:nil).count
-    @requested_attendances=Attendance.where(instructor_test:@user.name).where(change:false)  #追記#
+    #追記#
+    @requested_attendances=Attendance.where(instructor_test:@user.name).where(change:false)  
     @one_month_requested_attendances=Attendance.where(instructor_one_month_test:@user.name).where(change_one_month:false)
+    @superior=User.where(superior:true).where.not(id:@user.id)  #勤怠完成版申請時に必要#
   end
     
   

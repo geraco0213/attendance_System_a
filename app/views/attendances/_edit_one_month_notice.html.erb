@@ -53,14 +53,14 @@
 	    	         <tr>
 	    	           <td><%=l(day.worked_on, format: :short) %></td>
 	    	           <td><%=$days_of_the_week[day.worked_on.wday] %></td>
-	    	  				 <td><%=l(day.started_at, format: :hour) if day.started_at.present? %></td>
-	    	  				 <td><%=l(day.started_at, format: :minute) if day.started_at.present? %></td>
-	    	　				 <td><%=l(day.finished_at, format: :hour) if day.finished_at.present? %></td>
-	    	　				 <td><%=l(day.finished_at, format: :minute) if day.finished_at.present? %></td>
-	    	　				 <td><%=l(day.started_at, format: :hour) if day.started_at.present? %></td>
-	    	  				 <td><%=l(day.started_at, format: :minute) if day.started_at.present? %></td>
-	    	　				 <td><%=l(day.finished_at, format: :hour) if day.finished_at.present? %></td>
-	    	　				 <td><%=l(day.finished_at, format: :minute) if day.finished_at.present? %></td>
+	    	  				 <td><%=l(day.started_at_before_last_save, format: :hour) if day.started_at_before_last_save.present? %></td>
+	    	  				 <td><%=l(day.started_at_before_last_save, format: :minute) if day.started_at_before_last_save.present?%></td>
+	    	　				 <td><%=l(day.finished_at_before_last_save, format: :hour) if day.finished_at_before_last_save.present? %></td>
+	    	　				 <td><%=l(day.finished_at_before_last_save, format: :minute) if day.finished_at_before_last_save.present?   %></td>
+	    	　				 <td><%=l(day.started_at, format: :hour)  %></td>
+	    	  				 <td><%=l(day.started_at, format: :minute)  %></td>
+	    	　				 <td><%=l(day.finished_at, format: :hour) %></td>
+	    	　				 <td><%=l(day.finished_at, format: :minute) %></td>
 	    	　				 <td><%=day.note %></td>
 	    	　         <!--以下dゾーン-->
 	    	　				 <td><%=d.select:instructor_one_month_reply,{'なし':1, '承認':2, '否認':3},{include_blank:"申請中"}, {class:"form-control"} %></td>
