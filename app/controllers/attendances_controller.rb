@@ -57,7 +57,7 @@ class AttendancesController < ApplicationController
   def update_one_month_notice
     @user=User.find(params[:id])
     ActiveRecord::Base.transaction do
-      overtime_permit_params.each do |id, item|
+      one_month_permit_params.each do |id, item|
         attendance = Attendance.find(id)
         attendance.update_attributes!(item)
       end
@@ -125,7 +125,7 @@ class AttendancesController < ApplicationController
 
   private
     def attendances_params
-      params.require(:user).permit(attendances:[:started_at, :finished_at, :note])[:attendances]
+      params.require(:user).permit(attendances:[:started_at, :finished_at, :note, :instructor_one_month_test, :tomorrow_one_month])[:attendances]
     end
     
     def overtime_request_params
@@ -136,7 +136,8 @@ class AttendancesController < ApplicationController
       params.require(:user).permit(attendances:[:instructor_reply, :change, :user_id])[:attendances]
     end
     
-    
-    
+    def one_month_permit_params
+      params.require(:user).permit(attendances:[:instructor_one_month_reply, :change_one_month, :user_id])[:attendances]
+    end
     
 end

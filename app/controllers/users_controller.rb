@@ -6,10 +6,6 @@ class UsersController < ApplicationController
   before_action :admin_or_correct_or_superior_user, only: :show  #superiorを追記#
   before_action :set_one_month, only: :show
   
-  #以下、追記#
-  before_action :requested, only: :show 
-  before_action :one_month_requested, only: :show
-  
   
   def new
     if logged_in?
@@ -35,6 +31,8 @@ class UsersController < ApplicationController
   
   def show
     @worked_sum = @attendances.where.not(started_at:nil).count
+    @requested_attendances=Attendance.where(instructor_test:@user.name).where(change:false)  #追記#
+    @one_month_requested_attendances=Attendance.where(instructor_one_month_test:@user.name).where(change_one_month:false)
   end
     
   
@@ -56,9 +54,6 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
   
-  
-  
-
   
   
   private  #部署などの基本情報はまだ#
