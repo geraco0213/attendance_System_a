@@ -33,7 +33,7 @@ label="Close">
                   <td><%= f.time_field :scheduled_end_time,class: 'form-control' %></td>
                   <td><%= f.check_box :tomorrow,id: "tomorrow" %></td>
                   <td><%= f.text_field :business_outline, class: 'form-control' %></td>
-                  <td><%= f.collection_select(:instructor_test, @superior,:name, :name,{include_blank:true}, {class: "form-control",required:true}) %></td>
+                  <td><%= f.collection_select(:instructor_test, @superior,:name, :name,{include_blank:true}, {class: "form-control"}) %></td>
                 </tr>
               </tbody>
             </table>

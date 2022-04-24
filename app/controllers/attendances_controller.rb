@@ -83,7 +83,7 @@ class AttendancesController < ApplicationController
   def update_overtime_request
     @user= User.find(params[:user_id])
     @attendance= @user.attendances.find(params[:id])
-    if params[:attendance][:scheduled_end_time].blank? || params[:attendance][:business_outline].blank?
+    if params[:attendance][:scheduled_end_time].blank? || params[:attendance][:business_outline].blank? || params[:attendance][:instructor_test].blank?
       flash[:danger]="入力に不備があり、申請をキャンセルしました"
     else
       @attendance.update_attributes(overtime_request_params)

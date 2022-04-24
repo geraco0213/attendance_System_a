@@ -26,7 +26,7 @@
   <% if current_user.superior? && current_user?(@user) %>
   
     <% if @one_month_requested_attendances.count>0 %>
-      <%=link_to "【勤怠編集のお知らせ】", attendances_edit_one_month_notice_user_path, class:"notice-sentence"%>
+      <%=link_to "【勤怠編集のお知らせ】", attendances_edit_one_month_notice_user_path, remote:true, class:"notice-sentence"%>
       <span class="notice-sentence"><%="#{@one_month_requested_attendances.count}件の通知があります" %></span>
     <% else %>
       <p class="notice-sentence">【勤怠編集のお知らせ】０件の通知があります</p>
@@ -147,6 +147,10 @@ hidden="true"></div>
 
 <!--モーダルウインドウ表示-->
 <div id="edit-overtime-notice" class="modal fade" tabindex="-1" role="dialog" aria-
+hidden="true"></div>
+
+<!--モーダルウインドウ表示-->
+<div id="edit-one-month-notice" class="modal fade" tabindex="-1" role="dialog" aria-
 hidden="true"></div>
 
 
