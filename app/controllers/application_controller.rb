@@ -61,6 +61,10 @@ class ApplicationController < ActionController::Base
   def requested
     @requested_attendances=Attendance.where(instructor_test:@user.name).where(change:false)
   end
+  
+  def one_month_requested
+    @one_month_requested_attendances=Attendance.where(instructor_one_month_test:@user.name)
+  end
 
     
 end

@@ -52,20 +52,14 @@
 	    	　<td><%=l(day.finished_at, format: :minute) if day.finished_at.present? %></td>
 	    	　
 	    	　<td><%=day.note %></td>
-	    	　<!--以下dぞーん-->
+	    	　<!--以下dゾーン-->
+	    	　<td><%=d.select:instructor_one_month_reply,{'なし':1, '承認':2, '否認':3},{include_blank:"申請中"}, {class:"form-control"} %></td>
+	    	　<td><%=d.check_box :change_one_month, id:"change_one_month" %></td>
+			    <td><%=link_to "勤怠を確認する", user_path(day.user), class:"btn btn-primary"%></td>
 	    	</tr>
 	    </tbody>
-	    
-	    
-	    	
-	    	
-	    	
-	    
-	
-	
-	
-	
-	
-	
-	
+	  </table>
+	  <% end %>
+	  <%= f.submit "変更を送信する", class:"btn btn-primary" %>
+  <% end %>
 </div>

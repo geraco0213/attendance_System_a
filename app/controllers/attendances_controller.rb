@@ -46,11 +46,29 @@ class AttendancesController < ApplicationController
   
   end
   
-  #１か月の勤怠編集の申請内容を見て承認するページ#
+  #１か月の勤怠編集の申請内容を見て承認するページ＃
   def edit_one_month_notice
-  
-  
+    @user=User.find(params[:id])
+    @attendances=Attendance.where(instructor_one_month_test:@user.name).where(change_one_month:false)
   end
+  
+  
+  #１か月の勤怠編集の承認内容が送信されるページ#
+  def update_one_month_notice
+    @user=User.find(params[:id])
+    ActiveRecord::Base.transaction do
+      overtime_permit_params.each do |id, item|
+        attendance = Attendance.find(id)
+        attendance.update_attributes!(item)
+      end
+    end
+    flash[:success] = "承認完了"
+    redirect_to user_url
+  rescue ActiveRecord::RecordInvalid 
+    flash[:danger] = "無効な入力データがあった為、承認をキャンセルしました。"
+    redirect_to attendances_edit_overtime_notice_user_url
+  end
+  
   
 
   
@@ -91,19 +109,14 @@ class AttendancesController < ApplicationController
         attendance.update_attributes!(item)
       end
     end
-    flash[:success] = "1ヶ月分の勤怠情報を更新しました。"
+    flash[:success] = "承認完了"
     redirect_to user_url
   rescue ActiveRecord::RecordInvalid 
-    flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
+    flash[:danger] = "無効な入力データがあった為、承認をキャンセルしました。"
     redirect_to attendances_edit_overtime_notice_user_url
   end
   
   
-  #１か月の勤怠編集の申請内容を見て承認するページ＃
-  def edit_one_month_notice
-    @user=User.find(params[:id])
-    @attendances=Attendance.where(instructor_one_month_test:@user.name).where(change:false)
-  end
   
   
 

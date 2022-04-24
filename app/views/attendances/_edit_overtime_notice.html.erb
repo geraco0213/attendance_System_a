@@ -43,6 +43,7 @@
 			        <td><%=d.select:instructor_reply, {'なし':1, '承認':2, '否認':3},{include_blank:"申請中"}, {class:"form-control"} %></td>
 			        <td><%=d.check_box :change, id:"change" %></td>
 			        <td><%=link_to "勤怠を確認する", user_path(day.user), class:"btn btn-primary"%></td>
+			      </tabody>
 		        <% end %>
 	        </table>
 	        <% end %>
