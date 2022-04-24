@@ -1,5 +1,5 @@
 <% provide(:title, @user.name) %>
-<%=form_with(model:@user, url:attendances_update_one_month_user_path(date:@first_day), method: :patch, local:true) do |f| %>
+<%=form_with(model:@user, url:attendances_update_one_month_request_user_path(date:@first_day), method: :patch, local:true) do |f| %>
 <table class="table table-bordered table-striped" id="attendance-edit-table">
   <thead>
     <tr>
@@ -10,7 +10,11 @@
       <th>翌日</th>
       <th>在社時間</th>
       <th>備考</th>
-      <th>指示者確認✔︎</th>　<%# 印鑑マーク #%>
+      <th>指示者確認︎
+        <div class="maru size_small black">
+          <div class="letter">印</div>
+        </div>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -33,7 +37,7 @@
         <% end %>
       </td>
       <td><%= attendance.text_field:note, class:"form-control" %></td>
-      <td></td>
+      <td><%= attendance.collection_select(:instructor_one_month_test, @superior,:name,:name,{include_blank:true},{class:"form-control"}) %></td>
     </tr>
     <% end %>
   <% end %>

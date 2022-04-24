@@ -1,8 +1,8 @@
 class AttendancesController < ApplicationController
-  before_action :set_user, only:[:edit_one_month,:update_one_month]
-  before_action :logged_in_user, only:[:update,:edit_one_month,:update_one_month] 
-  before_action :admin_or_correct_or_superior_user, only:[:update,:edit_one_month,:update_one_month]  #superiorを追記#
-  before_action :set_one_month, only:[:edit_one_month]
+  before_action :set_user, only:[:edit_one_month_request,:update_one_month_request]
+  before_action :logged_in_user, only:[:update,:edit_one_month_request,:update_one_month_request] 
+  before_action :admin_or_correct_or_superior_user, only:[:update,:edit_one_month_request,:update_one_month_request]  #superiorを追記#
+  before_action :set_one_month, only:[:edit_one_month_request]
   
   UPDATE_ERROR_MSG="勤怠登録に失敗しました。やり直してください"
   def update
@@ -25,23 +25,33 @@ class AttendancesController < ApplicationController
     redirect_to @user
   end
   
-  
-  def edit_one_month
+  #１か月の勤怠編集を申請するページ#
+  def edit_one_month_request
+    @superior=User.where(superior:true).where.not(id:current_user.id)
   end
   
-  def update_one_month
+  #１か月の勤怠編集の申請内容が送信されるページ#
+  def update_one_month_request
     ActiveRecord::Base.transaction do
       attendances_params.each do |id, item|
         attendance = Attendance.find(id)
         attendance.update_attributes!(item)
       end
     end
-    flash[:success] = "1ヶ月分の勤怠情報を更新しました。"
+    flash[:success] = "1ヶ月分の勤怠情報を申請しました。"
     redirect_to user_url(date: params[:date])
   rescue ActiveRecord::RecordInvalid 
-    flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
+    flash[:danger] = "無効な入力データがあった為、申請をキャンセルしました。"
     redirect_to attendances_edit_one_month_user_url(date: params[:date])
+  
   end
+  
+  #１か月の勤怠編集の申請内容を見て承認するページ#
+  def edit_one_month_notice
+  
+  
+  end
+  
 
   
   #残業の申請ページ#
@@ -86,6 +96,13 @@ class AttendancesController < ApplicationController
   rescue ActiveRecord::RecordInvalid 
     flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
     redirect_to attendances_edit_overtime_notice_user_url
+  end
+  
+  
+  #１か月の勤怠編集の申請内容を見て承認するページ＃
+  def edit_one_month_notice
+    @user=User.find(params[:id])
+    @attendances=Attendance.where(instructor_one_month_test:@user.name).where(change:false)
   end
   
   

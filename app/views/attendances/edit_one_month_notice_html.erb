@@ -1,0 +1,71 @@
+<div class="col-md-10 col-md-offset-1">
+	<%= form_with(model:@user, url:attendances_update_one_month_notice_user_path(@user), method: :patch, local:true) do |f| %>
+	  <% @attendances.each do |day| %>
+	  <%= day.user.name %>
+	  
+	  <table class="table table-bordered table-condensed" id="one_month_notice_table" %>
+	    <thead>
+	    　<tr>
+	        <th>日付</th>
+	        <th>曜日</th>
+	        <th>変更前</th>
+	        <th>変更後</th>
+	        <th>備考</th>
+	        <th>指示者確認
+	          <div class="maru small_size black">
+	        	  <div class="letter">印</div>
+	          </div>
+	        </th>
+	        <th>変更</th>
+	        <th>勤怠を確認する</th>
+	      </tr>
+	      <tr>
+	        <th>出社</th>
+	        <th>退社</th>
+	      	<th>出社</th>
+	        <th>退社</th>
+	      </tr>
+	      <tr>
+	        <th>時</th>
+	        <th>分</th>
+	        <th>時</th>
+	        <th>分</th>
+	        <th>時</th>
+	        <th>分</th>
+	        <th>時</th>
+	        <th>分</th>
+	      </tr>
+	    </thead>
+	    
+	    <%=f.fields_for "attendances[]", day do |d| %>
+	    <%=d.hidden_field :user_id, :value => day.user.id %>
+	    <tbody>
+	    	<tr>
+	    	  <td><%=l(day.started_at, format: :hour) if day.started_at.present? %></td>
+	    	  <td><%=l(day.started_at, format: :minute) if day.started_at.present? %></td>
+	    	　<td><%=l(day.finished_at, format: :hour) if day.finished_at.present? %></td>
+	    	　<td><%=l(day.finished_at, format: :minute) if day.finished_at.present? %></td>
+	    	　
+	    	　<td><%=l(day.started_at, format: :hour) if day.started_at.present? %></td>
+	    	  <td><%=l(day.started_at, format: :minute) if day.started_at.present? %></td>
+	    	　<td><%=l(day.finished_at, format: :hour) if day.finished_at.present? %></td>
+	    	　<td><%=l(day.finished_at, format: :minute) if day.finished_at.present? %></td>
+	    	　
+	    	　<td><%=day.note %></td>
+	    	　<!--以下dぞーん-->
+	    	</tr>
+	    </tbody>
+	    
+	    
+	    	
+	    	
+	    	
+	    
+	
+	
+	
+	
+	
+	
+	
+</div>

@@ -10,10 +10,12 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
-      get 'attendances/edit_one_month'
-      patch 'attendances/update_one_month'
+      get 'attendances/edit_one_month_request'
+      patch 'attendances/update_one_month_request'
       get 'attendances/edit_overtime_notice'
       patch 'attendances/update_overtime_notice'
+      get 'attendances/edit_one_month_notice'
+      patch 'attendances/update_one_month_notice'
     end
     
     resources :attendances, only: :update do

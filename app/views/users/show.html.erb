@@ -34,7 +34,7 @@
   <!--ボタン各種-->
   <div class="btn-wrapper">
     <% if current_user?(@user) %>
-      <%=link_to "勤怠を編集", attendances_edit_one_month_user_path(date:@first_day), class: "btn btn-primary" %>
+      <%=link_to "勤怠を編集", attendances_edit_one_month_request_user_path(date:@first_day), class: "btn btn-primary" %>
     <% end %>
   </div>
   
