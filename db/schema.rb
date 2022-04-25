@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220424124722) do
+ActiveRecord::Schema.define(version: 20220425054019) do
 
   create_table "attendances", force: :cascade do |t|
     t.date "worked_on"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20220424124722) do
     t.boolean "superior", default: false
     t.datetime "fixed_start", default: "2022-04-25 00:00:00"
     t.datetime "fixed_finish", default: "2022-04-25 09:00:00"
+    t.string "instructor_comp_test"
   end
 
 end

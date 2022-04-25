@@ -34,7 +34,9 @@ class UsersController < ApplicationController
     #追記#
     @requested_attendances=Attendance.where(instructor_test:@user.name).where(change:false)  
     @one_month_requested_attendances=Attendance.where(instructor_one_month_test:@user.name).where(change_one_month:false)
+    
     @superior=User.where(superior:true).where.not(id:@user.id)  #勤怠完成版申請時に必要#
+    @comp_requested_users=User.where(instructor_comp_test:@user.name).where(change_comp:false)
   end
     
   
@@ -54,6 +56,14 @@ class UsersController < ApplicationController
     @user.destroy
     flash[:danger]="#{@user.name}を削除しました"
     redirect_to users_url
+  end
+  
+  
+  
+  #追記#
+  #勤怠完成版申請の内容を確認し、承認するページ#
+  def comp_notice
+    @users=User.where(instructor_comp_test:@user.name)
   end
   
   
