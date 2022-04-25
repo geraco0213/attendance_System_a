@@ -4,7 +4,8 @@ class UsersController < ApplicationController
   before_action :correct_user, only:[:edit, :update]
   before_action :admin_user, only:[:index,:destroy]
   before_action :admin_or_correct_or_superior_user, only: :show  #superiorを追記#
-  before_action :set_one_month, only: :show
+  before_action :set_one_month, only: [:show]
+  
   
   
   def new
@@ -61,11 +62,27 @@ class UsersController < ApplicationController
   
   
   #追記#
-  #勤怠完成版申請の内容を確認し、承認するページ#
-  def comp_notice
-    @users=User.where(instructor_comp_test:@user.name)
+  #勤怠完全版の申請を受け取るページ#
+  def update_comp_request
+    @user=User.find(params[:id])
+    if params[:user][:instructor_comp_test].blank?
+      flash[:danger]="不備があり、申請を中止しました"
+    elsif @user.update_attributes(comp_request_params)
+      flash[:success]="勤怠編集を受け付けました"
+    
+    end
+    redirect_to user_url(@user)
   end
   
+  #勤怠完成版申請の内容を確認し、承認するページ#
+  def edit_comp_notice
+    @user=User.find(params[:id])
+    @users=User.where(instructor_comp_test:@user.name).where(change_comp:false)
+  end
+  
+  #勤怠完成版申請の承認が送信されるページ
+  def update_comp_notice
+  end
   
   
   private  #部署などの基本情報はまだ#
@@ -73,5 +90,8 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name,:email,:password,:password_confirmation)
     end
     
+    def comp_request_params
+      params.require(:user).permit(:instructor_comp_test)
+    end
   
 end

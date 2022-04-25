@@ -25,11 +25,11 @@
   <!--上長のページの場合は、以下に申請を見るページへのリンク-->
   <% if current_user.superior? && current_user?(@user) %>
     <% if @comp_requested_users.count>0 %>
-      <%=link_to "【所属長承認申請のお知らせ】", edit_comp_notice_user_path, rmote:true, class:"notice-sentence" %>
-      <span class="notice-sentence"><%="#{@comp_requested_notice.count}件の通知があります" %></span>
+      <%=link_to "【所属長承認申請のお知らせ】", edit_comp_notice_user_path(@user), remote:true, class:"notice-sentence" %>
+      <span class="notice-sentence"><%="#{@comp_requested_users.count}件の通知があります" %></span>
     <% else %>
       <p class="notice-sentence">【所属長承認申請のお知らせ】0件の通知があります</p>
-  
+    <% end %>
   
     <% if @one_month_requested_attendances.count>0 %>
       <%=link_to "【勤怠編集のお知らせ】", attendances_edit_one_month_notice_user_path, remote:true, class:"notice-sentence"%>
@@ -153,10 +153,9 @@
         <td colspan="6"></td>
         <td>
           所属長承認　未
-          <%= form_with(model:@user, url: update_comp_request_user_path(@user), method: :patch) do |f| %>
-            <%= f.hidden_field :user_id, :value => @user.id %>
+          <%= form_with(model:@user, url: update_comp_request_user_path(@user), method: :patch, local:true) do |f| %>
             <%= f.collection_select(:instructor_comp_test, @superior,:name, :name,{include_blank:true}, {class: "form-control"}) %>
-            <%=link_to "申請", update_comp_request_user_path(@user), method: :patch, class:"btn btn-primary" %>
+            <%= f.submit "申請", class: "btn btn-block btn-primary" %>
           <% end %>
         </td>
       </tr>
