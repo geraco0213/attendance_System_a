@@ -9,11 +9,11 @@
 		<div class="modal-body">
 			<div class="row">
         <div class="col-md-10 col-md-offset-1">
-        	<%=form_with(model:@user, update_comp_notice_user_path(@user), method: :patch,  local:true) do |f| %>
+        	<%=form_with(model:@user, url:update_comp_notice_user_path(@user), method: :patch,  local:true) do |f| %>
         	<% @users.each do |user| %>
         	<%= user.name %>
         	
-          <table class="table table-bordered table-striped table-condensed">
+          <table class="table table-bordered table-striped table-condensed" id="comp-notice-table">
           	<thead>
           		<th>月</th>
           		<th>指示者確認
@@ -24,13 +24,10 @@
           		<th>変更</th>
           		<th>勤怠を確認する</th>
           　</thead>
-          　
-          　<%= f.fields_for "users[]" do |u| %>
-		        <%= u.hidden_field :user_id, :value => user.id %>
           　<tbody>
           　	<td></td>
-          　	<td><%=u.select:instructor_comp_reply,{'なし':1, '承認':2, '否認':3},{include_blank:"申請中"}, {class:"form-control"} %></td>
-          　	<td><%=u.check_box :change_comp, id:"change_comp" %></td>
+          　	<td><%=f.select:instructor_comp_reply,{'なし':1, '承認':2, '否認':3},{include_blank:"申請中"}, {class:"form-control"} %></td>
+          　	<td><%=f.check_box :change_comp, id:"change_comp" %></td>
           　	<td><%=link_to "勤怠を確認する", user_path(user), class:"btn btn-primary" %></td>
           　</tbody>
           　<% end %>

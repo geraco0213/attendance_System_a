@@ -152,7 +152,16 @@
         <td><%= format("%.2f", @total_working_times.to_f) %></td>
         <td colspan="6"></td>
         <td>
-          所属長承認　未
+          <% if @user.instructor_comp_test.blank? && ! @user.change_comp? %>
+            所属長承認　未
+          <% elsif @user.instructor_comp_test.present? && ! @user.change_comp? %>
+            <%=@user.instructor_comp_test %>に申請中
+          <% elsif @user.change_comp.present? && @user.instructor_comp_reply=="2"%>
+            勤怠承認済
+          <% elsif @user.change_comp.present? && @user.instructor_comp_reply=="3"%>
+            勤怠否認
+          <% end %>
+          
           <%= form_with(model:@user, url: update_comp_request_user_path(@user), method: :patch, local:true) do |f| %>
             <%= f.collection_select(:instructor_comp_test, @superior,:name, :name,{include_blank:true}, {class: "form-control"}) %>
             <%= f.submit "申請", class: "btn btn-block btn-primary" %>

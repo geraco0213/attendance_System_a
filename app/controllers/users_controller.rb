@@ -17,14 +17,16 @@ class UsersController < ApplicationController
   end
   
   def create
-    @user=User.new(user_params)
+    @user = User.new(user_params)
     if @user.save
-      flash[:success]="新規作成に成功しました"
-    　redirect_to @user
+      log_in @user
+      flash[:success] = '新規作成に成功しました。'
+      redirect_to @user
     else
       render :new
     end
   end
+  
   
   def index
     @users=User.paginate(page:params[:page], per_page:30)
@@ -82,6 +84,14 @@ class UsersController < ApplicationController
   
   #勤怠完成版申請の承認が送信されるページ
   def update_comp_notice
+    @user=User.find(params[:id])
+    @users=User.where(instructor_comp_test:@user.name).where(change_comp:false)
+    @users.each do |user|
+      if user.update_attributes(comp_permit_params)
+         flash[:success]="承認しました"
+      end
+      redirect_to user_url(@user)
+    end
   end
   
   
@@ -92,6 +102,10 @@ class UsersController < ApplicationController
     
     def comp_request_params
       params.require(:user).permit(:instructor_comp_test)
+    end
+    
+    def comp_permit_params
+      params.require(:user).permit(:instructor_comp_reply, :change_comp)
     end
   
 end

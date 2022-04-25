@@ -76,8 +76,6 @@ class AttendancesController < ApplicationController
   end
   
   
-
-  
   #残業の申請ページ#
   def edit_overtime_request
     @user = User.find(params[:user_id])
