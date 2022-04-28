@@ -61,7 +61,6 @@ class AttendancesController < ApplicationController
   
   #１か月の勤怠編集の承認内容が送信されるページ#
   def update_one_month_notice
-    @user=User.find(params[:id])
     ActiveRecord::Base.transaction do
       one_month_permit_params.each do |id, item|
         attendance = Attendance.find(id)
@@ -100,13 +99,12 @@ class AttendancesController < ApplicationController
   
   #残業の申請内容を見て承認するページ#
   def edit_overtime_notice
-    @user=User.find(params[:user_id])
-    @attendances=@user.attendances.where(instructor_test:@user.name).where(change:false)
+    @user=User.find(params[:id])
+    @attendances=Attendance.where(instructor_test:@user.name).where(change:false)
   end
   
   #残業の承認内容が送信されるページ#
   def update_overtime_notice
-    @user=User.find(params[:id])
     ActiveRecord::Base.transaction do
       overtime_permit_params.each do |id, item|
         attendance = Attendance.find(id)
@@ -122,6 +120,7 @@ class AttendancesController < ApplicationController
   
   #勤怠完全版申請が送信されるページ#
   def update_comp_request
+    
     @user=User.find(params[:user_id])
     @attendance=@user.attendances.find(params[:id])  #ここ、@attendance=@user.attendances.find_by(worked_on:@first_day)より改変#
     if @attendance.update_attributes(comp_request_params)
@@ -141,17 +140,16 @@ class AttendancesController < ApplicationController
   #勤怠完全版承認が送信されるページ#
   def update_comp_notice
     ActiveRecord::Base.transaction do
-      @user=User.find(params[:id])
       comp_permit_params.each do |id, item|
         attendance = Attendance.find(id)
         attendance.update_attributes!(item)
       end
     end
     flash[:success] = "承認完了"
-    redirect_to user_url(@user)
+    redirect_to user_url
   rescue ActiveRecord::RecordInvalid 
     flash[:danger] = "無効な入力データがあった為、承認をキャンセルしました。"
-    redirect_to attendances_edit_comp_notice_user_url(@user)
+    redirect_to attendances_edit_comp_notice_user_url
   end
   
   
