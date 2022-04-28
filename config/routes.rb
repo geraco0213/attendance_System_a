@@ -16,15 +16,16 @@ Rails.application.routes.draw do
       patch 'attendances/update_overtime_notice'
       get 'attendances/edit_one_month_notice'
       patch 'attendances/update_one_month_notice'
-      patch 'update_comp_request'
-      get 'edit_comp_notice'
-      patch 'update_comp_notice'
+      get 'attendances/edit_comp_notice'
+      patch 'attendances/update_comp_notice'
     end
     
     resources :attendances, only: :update do
       member do
         get 'edit_overtime_request'
         patch 'update_overtime_request'
+        
+        patch 'update_comp_request'
       end
       
     end

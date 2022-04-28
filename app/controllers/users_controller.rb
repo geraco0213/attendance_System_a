@@ -7,7 +7,6 @@ class UsersController < ApplicationController
   before_action :set_one_month, only: [:show]
   
   
-  
   def new
     if logged_in?
       flash[:info]="すでにログインしています"
@@ -17,16 +16,14 @@ class UsersController < ApplicationController
   end
   
   def create
-    @user = User.new(user_params)
+    @user=User.new(user_params)
     if @user.save
-      log_in @user
-      flash[:success] = '新規作成に成功しました。'
-      redirect_to @user
+      flash[:success]="新規作成に成功しました"
+    　redirect_to @user
     else
       render :new
     end
   end
-  
   
   def index
     @users=User.paginate(page:params[:page], per_page:30)
@@ -38,8 +35,10 @@ class UsersController < ApplicationController
     @requested_attendances=Attendance.where(instructor_test:@user.name).where(change:false)  
     @one_month_requested_attendances=Attendance.where(instructor_one_month_test:@user.name).where(change_one_month:false)
     
-    @superior=User.where(superior:true).where.not(id:@user.id)  #勤怠完成版申請時に必要#
-    @comp_requested_users=User.where(instructor_comp_test:@user.name).where(change_comp:false)
+    #以下、勤怠完全版申請に必要#
+    @superior=User.where(superior:true).where.not(id:@user.id)  
+    @attendance=@user.attendances.find_by(worked_on:@first_day)
+    @comp_requested_attendances=Attendance.where(instructor_comp_test:@user.name).where(change_comp:false)
   end
     
   
@@ -63,36 +62,6 @@ class UsersController < ApplicationController
   
   
   
-  #追記#
-  #勤怠完全版の申請を受け取るページ#
-  def update_comp_request
-    @user=User.find(params[:id])
-    if params[:user][:instructor_comp_test].blank?
-      flash[:danger]="不備があり、申請を中止しました"
-    elsif @user.update_attributes(comp_request_params)
-      flash[:success]="勤怠編集を受け付けました"
-    
-    end
-    redirect_to user_url(@user)
-  end
-  
-  #勤怠完成版申請の内容を確認し、承認するページ#
-  def edit_comp_notice
-    @user=User.find(params[:id])
-    @users=User.where(instructor_comp_test:@user.name).where(change_comp:false)
-  end
-  
-  #勤怠完成版申請の承認が送信されるページ
-  def update_comp_notice
-    @user=User.find(params[:id])
-    @users=User.where(instructor_comp_test:@user.name).where(change_comp:false)
-    @users.each do |user|
-      if user.update_attributes(comp_permit_params)
-         flash[:success]="承認しました"
-      end
-      redirect_to user_url(@user)
-    end
-  end
   
   
   private  #部署などの基本情報はまだ#
@@ -100,12 +69,6 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name,:email,:password,:password_confirmation)
     end
     
-    def comp_request_params
-      params.require(:user).permit(:instructor_comp_test)
-    end
-    
-    def comp_permit_params
-      params.require(:user).permit(:instructor_comp_reply, :change_comp)
-    end
+   
   
 end
