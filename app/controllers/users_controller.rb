@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :correct_user, only:[:edit, :update]
   before_action :admin_user, only:[:index,:destroy]
   before_action :admin_or_correct_or_superior_user, only: :show  #superiorを追記#
-  before_action :set_one_month, only: :show
+  before_action :set_one_month, only: [:show]
   
   
   def new
@@ -34,7 +34,11 @@ class UsersController < ApplicationController
     #追記#
     @requested_attendances=Attendance.where(instructor_test:@user.name).where(change:false)  
     @one_month_requested_attendances=Attendance.where(instructor_one_month_test:@user.name).where(change_one_month:false)
-    @superior=User.where(superior:true).where.not(id:@user.id)  #勤怠完成版申請時に必要#
+    
+    #以下、勤怠完全版申請に必要#
+    @superior=User.where(superior:true).where.not(id:@user.id)  
+    @attendance=@user.attendances.find_by(worked_on:@first_day)
+    @comp_requested_attendances=Attendance.where(instructor_comp_test:@user.name).where(change_comp:false)
   end
     
   
@@ -58,10 +62,13 @@ class UsersController < ApplicationController
   
   
   
+  
+  
   private  #部署などの基本情報はまだ#
     def user_params
       params.require(:user).permit(:name,:email,:password,:password_confirmation)
     end
     
+   
   
 end

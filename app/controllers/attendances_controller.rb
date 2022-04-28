@@ -102,8 +102,8 @@ class AttendancesController < ApplicationController
   
   #残業の申請内容を見て承認するページ#
   def edit_overtime_notice
-    @user=User.find(params[:id])
-    @attendances=Attendance.where(instructor_test:@user.name).where(change:false)
+    @user=User.find(params[:user_id])
+    @attendances=@user.attendances.where(instructor_test:@user.name).where(change:false)
   end
   
   #残業の承認内容が送信されるページ#
@@ -120,6 +120,41 @@ class AttendancesController < ApplicationController
   rescue ActiveRecord::RecordInvalid 
     flash[:danger] = "無効な入力データがあった為、承認をキャンセルしました。"
     redirect_to attendances_edit_overtime_notice_user_url
+  end
+  
+  #勤怠完全版申請が送信されるページ#
+  def update_comp_request
+    @user=User.find(params[:user_id])
+    @first_day=params[:date].nil?? Date.current.beginning_of_month : params[:date].to_date
+    @attendance=@user.attendances.find_by(worked_on:@first_day)
+    if @attendance.update_attributes(comp_request_params)
+      flash[:success]="申請しました"
+    end
+    redirect_to user_url(@user)
+  end
+  
+  #勤怠完全版申請を見て承認するページ#
+  def edit_comp_notice
+    @user=User.find(params[:id])
+    @attendances=Attendance.where(instructor_comp_test:@user.name).where(change_comp:false)
+  end
+  
+  
+  
+  #勤怠完全版承認が送信されるページ#
+  def update_comp_notice
+    ActiveRecord::Base.transaction do
+      @user=User.find(params[:id])
+      comp_permit_params.each do |id, item|
+        attendance = Attendance.find(id)
+        attendance.update_attributes!(item)
+      end
+    end
+    flash[:success] = "承認完了"
+    redirect_to user_url(@user)
+  rescue ActiveRecord::RecordInvalid 
+    flash[:danger] = "無効な入力データがあった為、承認をキャンセルしました。"
+    redirect_to attendances_edit_comp_notice_user_url(@user)
   end
   
   
@@ -145,5 +180,14 @@ class AttendancesController < ApplicationController
     def one_month_permit_params
       params.require(:user).permit(attendances:[:instructor_one_month_reply, :change_one_month, :user_id])[:attendances]
     end
+    
+    def comp_request_params
+      params.require(:attendance).permit(:instructor_comp_test)
+    end
+    
+    def comp_permit_params
+      params.require(:user).permit(attendances:[:instructor_comp_reply, :change_comp, :user_id])[:attendances]
+    end
+    
     
 end

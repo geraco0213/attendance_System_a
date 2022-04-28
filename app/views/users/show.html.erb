@@ -24,11 +24,12 @@
   </table>
   <!--上長のページの場合は、以下に申請を見るページへのリンク-->
   <% if current_user.superior? && current_user?(@user) %>
-    
-  
-  
-  
-  
+    <% if @comp_requested_attendances.count>0 %>
+      <%=link_to "【所属長承認のお知らせ】", attendances_edit_comp_notice_user_path, remote:true, class:"notice-sentence"%>
+      <span class="notice-sentence"><%="#{@comp_requested_attendances.count}件の通知があります" %></span>
+    <% else %>
+      <p class="notice-sentence">【勤怠編集のお知らせ】０件の通知があります</p>
+    <% end %>
     <% if @one_month_requested_attendances.count>0 %>
       <%=link_to "【勤怠編集のお知らせ】", attendances_edit_one_month_notice_user_path, remote:true, class:"notice-sentence"%>
       <span class="notice-sentence"><%="#{@one_month_requested_attendances.count}件の通知があります" %></span>
@@ -149,7 +150,21 @@
         <td><%= format("%.2f", @total_working_times.to_f) %></td>
         <td colspan="6"></td>
         <td>
-          所属長承認　未
+          <%=form_with(model:@attendance, url:update_comp_request_user_attendance_path(@user, @attendance), method: :patch, local:true) do |f| %>
+            <table class="table table-bordered table-striped">
+              <thead>
+                <th>日付</th>
+                <th>曜日</th>
+                <th>指示者確認</th>
+               </thead>
+               <tbody>
+                 <td><%=@attendance.worked_on %></td>
+                 <td></td>
+                 <td><%= f.collection_select(:instructor_comp_test, @superior,:name, :name,{include_blank:true}, {class: "form-control"}) %></td>
+               </tbody>
+            </table>
+          <%=f.submit "申請", class:"btn btn-primary"%>
+          <% end %>
         </td>
       </tr>
     </tfoot>
@@ -166,6 +181,11 @@ hidden="true"></div>
 
 <!--モーダルウインドウ表示-->
 <div id="edit-one-month-notice" class="modal fade" tabindex="-1" role="dialog" aria-
+hidden="true"></div>
+
+
+<!--モーダルウインドウ表示-->
+<div id="edit-comp-notice" class="modal fade" tabindex="-1" role="dialog" aria-
 hidden="true"></div>
 
 
