@@ -112,6 +112,7 @@
           <td><%=working_times(day.user.fixed_finish, day.scheduled_end_time) if day.scheduled_end_time.present? %></td>
           <td><%=day.business_outline %></td>
           <td>
+            
             <% if day.instructor_test.present? && ! day.change? %>
               <%=day.instructor_test %>に残業申請中
             <% elsif day.change? %>
@@ -150,17 +151,31 @@
         <td><%= format("%.2f", @total_working_times.to_f) %></td>
         <td colspan="6"></td>
         <td>
+          <% if @attendance.instructor_comp_test.blank? %>
+            所属長承認　未
+          <% elsif @attendance.instructor_comp_test.present? && ! @attendance.change_comp? %>
+            <%=@attendance.instructor_comp_test %>に勤怠申請中
+          <% elsif @attendance.change_comp? %>
+            <% if @attendance.instructor_comp_reply==2%>
+              勤怠承認済
+            <% elsif @attendance.instructor_comp_reply==3%>
+              勤怠否認
+            <% elsif @attendance.instructor_comp_reply==1%>
+              <%=@attendance.instructor_comp_test %>に勤怠申請中
+            <% elsif @attendance.instructor_reply==4%>
+              <%=@attendance.instructor_comp_test %>に勤怠申請中
+            <% end %>
+          <% end %>
           <%=form_with(model:@attendance, url:update_comp_request_user_attendance_path(@user, @attendance), method: :patch, local:true) do |f| %>
             <table class="table table-bordered table-striped">
               <thead>
                 <th>日付</th>
-                <th>曜日</th>
                 <th>指示者確認</th>
                </thead>
                <tbody>
-                 <td><%=@attendance.worked_on %></td>
-                 <td></td>
+                 <td><%=l(@attendance.worked_on, format: :short) %></td>
                  <td><%= f.collection_select(:instructor_comp_test, @superior,:name, :name,{include_blank:true}, {class: "form-control"}) %></td>
+                 <%=f.hidden_field :worked_on, :value => @first_day %>
                </tbody>
             </table>
           <%=f.submit "申請", class:"btn btn-primary"%>

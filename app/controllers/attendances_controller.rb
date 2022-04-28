@@ -125,8 +125,7 @@ class AttendancesController < ApplicationController
   #勤怠完全版申請が送信されるページ#
   def update_comp_request
     @user=User.find(params[:user_id])
-    @first_day=params[:date].nil?? Date.current.beginning_of_month : params[:date].to_date
-    @attendance=@user.attendances.find_by(worked_on:@first_day)
+    @attendance=@user.attendances.find(params[:id])  #ここ、@attendance=@user.attendances.find_by(worked_on:@first_day)より改変#
     if @attendance.update_attributes(comp_request_params)
       flash[:success]="申請しました"
     end
