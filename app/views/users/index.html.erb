@@ -1,20 +1,15 @@
 <% provide(:title,"Users") %>
 <h1>ユーザー一覧</h1>
 
-<table class="table table-hover" id="users-table" %>
-<%=will_paginate %>
-  <thead>
-    <tr>
-      <td>名前</td>
-    </tr>
-　</thead>
-　
-　<tbody>
-　  <% @users.each do |user| %>
-　  <tr>
-　    <td><%=link_to user.name, user %></td>
-　  </tr>
-　  <% end %>
-　</tbody>
-</table>
-<%=will_paginate %>
+
+<% @users.each do |user| %>
+  <%=user.name %>
+  <%=user.email %>
+<% end %>
+
+<%= form_tag import_users_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "インポート" %>
+<% end %>
+
+

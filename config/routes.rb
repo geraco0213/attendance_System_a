@@ -21,11 +21,10 @@ Rails.application.routes.draw do
       get 'attendances/working'
     end
     
+    #CSV#
+    collection {post :import}
+    
     resources :attendances, only: :update do
-      collection do
-        
-      end 
-      
       member do
         get 'edit_overtime_request'
         patch 'update_overtime_request'

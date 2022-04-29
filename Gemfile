@@ -14,6 +14,7 @@ gem 'faker'
 gem 'rails-i18n'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
+gem 'roo'
 
 group :development, :test do
   gem 'sqlite3'
