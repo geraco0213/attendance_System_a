@@ -162,7 +162,9 @@ class AttendancesController < ApplicationController
   end
   
   
-  
+  def working
+   @attendances=Attendance.where.not(started_at:nil).where(finished_at:nil)
+  end
   
 
     

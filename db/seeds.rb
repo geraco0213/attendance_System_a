@@ -36,3 +36,15 @@ User.create!(name: "一般ユーザー3",
              
 
 puts "Users Created"
+
+
+
+
+
+
+Place.create!(number: 2,
+             name: "拠点A",
+             working_style: "勤怠",
+             )
+
+puts "Places Created"

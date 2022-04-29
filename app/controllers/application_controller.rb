@@ -58,6 +58,11 @@ class ApplicationController < ActionController::Base
   end
   
   
+  def set_place
+    @place=Place.find(params[:id])
+  end
+  
+  
  
     
 

@@ -18,17 +18,23 @@ Rails.application.routes.draw do
       patch 'attendances/update_one_month_notice'
       get 'attendances/edit_comp_notice'
       patch 'attendances/update_comp_notice'
+      get 'attendances/working'
     end
     
     resources :attendances, only: :update do
+      collection do
+        
+      end 
+      
       member do
         get 'edit_overtime_request'
         patch 'update_overtime_request'
-        
         patch 'update_comp_request'
       end
       
     end
   end
+  
+  resources :places 
   
 end
