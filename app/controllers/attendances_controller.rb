@@ -39,6 +39,9 @@ class AttendancesController < ApplicationController
           attendances_params.each do |id, item|
             attendance = Attendance.find(id)
             attendance.update_attributes!(item)
+            if attendance.change_one_month?
+              attendance.update_attributes(change_one_month:false)
+            end
           end
             flash[:success] = "1ヶ月分の勤怠情報を申請しました。"
             redirect_to user_url(date: params[:date])
@@ -90,6 +93,9 @@ class AttendancesController < ApplicationController
       flash[:danger]="入力に不備があり、申請をキャンセルしました"
     else
       @attendance.update_attributes(overtime_request_params)
+      if @attendance.change?
+        @attendance.update_attributes(change:false)
+      end
       flash[:success]="残業申請を受け付けました"
     end
     redirect_to user_url(@user) 
@@ -124,6 +130,9 @@ class AttendancesController < ApplicationController
     @user=User.find(params[:user_id])
     @attendance=@user.attendances.find(params[:id])  #ここ、@attendance=@user.attendances.find_by(worked_on:@first_day)より改変#
     if @attendance.update_attributes(comp_request_params)
+      if @attendance.change_comp?
+        @attendance.update_attributes(change_comp:false)
+      end
       flash[:success]="申請しました"
     end
     redirect_to user_url(@user)

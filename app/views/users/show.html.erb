@@ -28,7 +28,7 @@
       <%=link_to "【所属長承認のお知らせ】", attendances_edit_comp_notice_user_path, remote:true, class:"notice-sentence"%>
       <span class="notice-sentence"><%="#{@comp_requested_attendances.count}件の通知があります" %></span>
     <% else %>
-      <p class="notice-sentence">【勤怠編集のお知らせ】０件の通知があります</p>
+      <p class="notice-sentence">【所属長承認のお知らせ】０件の通知があります</p>
     <% end %>
     <% if @one_month_requested_attendances.count>0 %>
       <%=link_to "【勤怠編集のお知らせ】", attendances_edit_one_month_notice_user_path, remote:true, class:"notice-sentence"%>
