@@ -10,15 +10,15 @@ class AttendancesController < ApplicationController
   def update
     @user=User.find(params[:user_id])
     @attendance= @user.attendances.find(params[:id])
-    if @attendance.started_at.nil?
-      if @attendance.update_attributes(started_at:Time.current.change(sec:0))
+    if @attendance.before_started_at.nil?
+      if @attendance.update_attributes(before_started_at:Time.current.change(sec:0))
         flash[:info]="おはようございます。"
       else
         flash[:danger]=UPDATE_ERROR_MSG
       end
       
-    elsif @attendance.finished_at.nil?
-      if @attendance.update_attributes(finished_at:Time.current.change(sec:0))
+    elsif @attendance.before_finished_at.nil?
+      if @attendance.update_attributes(before_finished_at:Time.current.change(sec:0))
         flash[:info]="お疲れ様でした"
       else
         flash[:danger]=UPDATE_ERROR_MSG
@@ -170,7 +170,8 @@ class AttendancesController < ApplicationController
   
   #承認ログページ用#
   def history
-    @attendances=Attendance.where(instructor_one_month_reply:2)
+    @user=User.find(params[:id])
+    @attendances=@user.attendances.where(instructor_one_month_reply:2)
   end
   
   

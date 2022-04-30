@@ -91,20 +91,51 @@
           <td><%=link_to "残業申請", edit_overtime_request_user_attendance_path(@user,day), remote:true,class:"btn btn-primary" %></td>
           <td><%=l(day.worked_on, format: :short) %></td>
           <td><%=$days_of_the_week[day.worked_on.wday] %></td>
-          <td><%=l(day.started_at, format: :hour) if day.started_at.present? %></td>
-          <td><%=l(day.started_at, format: :minute) if day.started_at.present? %></td>
+          <td>
+            <% if day.instructor_one_month_test.blank? %>
+              <%=l(day.before_started_at, format: :hour) if day.before_started_at.present? %>
+            <% else %>
+              <%=l(day.started_at, format: :hour) %>
+            <% end %>
+          </td>
+          <td>
+            <% if day.instructor_one_month_test.blank? %>
+              <%=l(day.before_started_at, format: :minute) if day.before_started_at.present? %>
+            <% else%>
+              <%=l(day.started_at, format: :minute) %>
+            <% end %>
+          </td>
           <td>
             <% if btn_text=attendance_state(day) %>
               <%=link_to "#{btn_text}",user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-register" %>
             <% end %>
           </td>
-          <td><%=l(day.finished_at, format: :hour) if day.finished_at.present? %></td>
-          <td><%=l(day.finished_at, format: :minute) if day.finished_at.present? %></td>
+          <td>
+            <% if day.instructor_one_month_test.blank? %>
+              <%=l(day.before_finished_at, format: :hour) if day.before_finished_at.present? %>
+            <% else %>
+              <%=l(day.finished_at, format: :hour) %>
+            <% end %>
+          </td>
+          <td>
+            <% if day.instructor_one_month_test.blank? %>
+              <%=l(day.before_finished_at, format: :minute) if day.before_finished_at.present? %>
+            <% else %>
+              <%=l(day.finished_at, format: :minute) %>
+            <% end %>
+          </td>
           <td></td>
           <td>
-            <% if day.started_at.present? && day.finished_at.present? %>
-              <%=str_times=working_times(day.started_at, day.finished_at) %>
-              <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
+            <% if day.instructor_one_month_test.blank? %>
+              <% if day.before_started_at.present? && day.before_finished_at.present? %>
+                <%=str_times=working_times(day.before_started_at, day.before_finished_at) %>
+                <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
+              <% end %>
+            <% else %>
+              <% if day.started_at.present? && day.finished_at.present? %>
+                <%=str_times=working_times(day.started_at, day.finished_at) %>
+                <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
+              <% end %>
             <% end %>
           </td>
           <td><%= day.note %></td>

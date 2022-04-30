@@ -53,10 +53,10 @@
 	    	         <tr>
 	    	           <td><%=l(day.worked_on, format: :short) %></td>
 	    	           <td><%=$days_of_the_week[day.worked_on.wday] %></td>
-	    	  				 <td><%=l(day.started_at_before_last_save, format: :hour) if day.started_at_before_last_save.present? %></td>
-	    	  				 <td><%=l(day.started_at_before_last_save, format: :minute) if day.started_at_before_last_save.present?%></td>
-	    	　				 <td><%=l(day.finished_at_before_last_save, format: :hour) if day.finished_at_before_last_save.present? %></td>
-	    	　				 <td><%=l(day.finished_at_before_last_save, format: :minute) if day.finished_at_before_last_save.present?   %></td>
+	    	  				 <td><%=l(day.before_started_at, format: :hour) if day.before_started_at.present? %></td>
+	    	  				 <td><%=l(day.before_started_at, format: :minute) if day.before_started_at.present?%></td>
+	    	　				 <td><%=l(day.before_finished_at, format: :hour) if day.before_finished_at.present? %></td>
+	    	　				 <td><%=l(day.before_finished_at, format: :minute) if day.before_finished_at.present?   %></td>
 	    	　				 <td><%=l(day.started_at, format: :hour)  %></td>
 	    	  				 <td><%=l(day.started_at, format: :minute)  %></td>
 	    	　				 <td><%=l(day.finished_at, format: :hour) %></td>

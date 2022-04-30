@@ -2,8 +2,8 @@ module AttendancesHelper
   
   def attendance_state(attendance)
     if Date.current==attendance.worked_on
-      return '出社' if attendance.started_at.nil?
-      return '退社' if attendance.started_at.present? && attendance.finished_at.nil?
+      return '出社' if attendance.before_started_at.nil?
+      return '退社' if attendance.before_started_at.present? && attendance.before_finished_at.nil?
     end
     false
   end
