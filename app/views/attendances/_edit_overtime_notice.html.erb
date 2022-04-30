@@ -37,8 +37,8 @@
 			        <td><%=l(day.worked_on, format: :short) %></td>
 			        <td><%=$days_of_the_week[day.worked_on.wday] %></td>
 			        <td><%=l(day.scheduled_end_time, format: :time) %></td>
-		    	    <td><%=l(day.user.fixed_finish, format: :time) %></td>
-		 	        <td><%=working_times(day.user.fixed_finish, day.scheduled_end_time) %></td>
+		    	    <td><%=l(day.user.designated_work_finish_time, format: :time) %></td>
+		 	        <td><%=working_times(day.user.designated_work_finish_time, day.scheduled_end_time) %></td>
 			        <td><%=day.business_outline %></td>
 			        <td><%=d.select:instructor_reply, {'なし':1, '承認':2, '否認':3},{include_blank:"申請中"}, {class:"form-control"} %></td>
 			        <td><%=d.check_box :change, id:"change" %></td>

@@ -1,15 +1,63 @@
 <% provide(:title,"Users") %>
 <h1>ユーザー一覧</h1>
 
-
-<% @users.each do |user| %>
-  <%=user.name %>
-  <%=user.email %>
-<% end %>
-
 <%= form_tag import_users_path, multipart: true do %>
   <%= file_field_tag :file %>
   <%= submit_tag "インポート" %>
 <% end %>
 
 
+<% @users.each do |user| %>
+<%=user.name %>
+<%=link_to "削除", user_path(user), method: :delete, data: {confirm: "削除しますか？"}, class:"btn btn-primary" %>
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <p class="panel-title">
+        <a data-toggle="collapse" href="#collapsel" class="btn btn-primary">編集</a>
+      </p>
+    </div>
+    <div id="collapsel" class="panel-collapse collapse">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3" %>
+            <%=form_with(model:user, url:update_basic_info_user_path(user), method: :patch, local:true) do |f| %>
+              <%=render 'shared/error_messages', object:f.object %>
+              
+                <%=f.label:name, class:"label-form" %>
+                <%=f.text_field:name, class:"form-control" %>
+          
+                <%=f.label:email, class:"label-form" %>
+                <%=f.email_field:email, class:"form-control" %>
+                    
+                <%=f.label:affiliation, class:"label-form" %>
+                <%=f.text_field:affiliation, class:"form-control" %>
+          
+                <%=f.label:employee_number, class:"label-form" %>
+                <%=f.number_field:employee_number, class:"form-control" %>
+          
+                <%=f.label:uid, class:"label-form" %>
+                <%=f.text_field:uid, class:"form-control" %>
+          
+                <%=f.label:password, class:"label-form" %>
+                <%=f.password_field:password, class:"form-control" %>
+                    
+                <%=f.label:basic_work_time, class:"label-form" %>
+                <%=f.time_field:basic_work_time, class:"form-control" %>
+          
+                <%=f.label:designated_work_start_time, class:"label-form" %>
+                <%=f.time_field:designated_work_start_time, class:"form-control" %>
+          
+                <%=f.label:designated_work_finish_time, class:"label-form" %>
+                <%=f.time_field:designated_work_finish_time, class:"form-control" %>
+                    
+          
+                <%=f.submit:"編集する", class:"btn btn-primary btn-block btn-form" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -6,14 +6,14 @@
         <%=link_to "←", user_path(date:@first_day.prev_month), class: "btn btn-primary btn-change" %><span class="time-table-title"><%=l(@first_day, format: :middle) %> 時間管理表</span><%=link_to "→", user_path(date:@first_day.next_month), class: "btn btn-primary btn-change" %>
         </td>
         <td>
-        指定勤務開始時間   <%= l(@user.fixed_start, format: :time) %>
-        指定勤務終了時間   <%= l(@user.fixed_finish, format: :time) %>
+        指定勤務開始時間   <%= l(@user.designated_work_start_time, format: :time) %>
+        指定勤務終了時間   <%= l(@user.designated_work_finish_time, format: :time) %>
         </td>
-        <td colspan="3">基本時間   <%= format_basic_info(@user.basic_time) %></td>
+        <td colspan="3">基本時間   <%= format_basic_info(@user.basic_work_time) %></td>
         <td>初日   <%=l(@first_day, format: :shortA) %></td>
       </tr>
       <tr>
-        <td>所属   <%= @user.department?? @user.department : "未所属" %></td>
+        <td>所属   <%= @user.affiliation?? @user.affiliation : "未所属" %></td>
         <td>氏名   <%=@user.name %></td>
         <td>コード</td>
         <td></td>
@@ -109,7 +109,7 @@
           <td><%= day.note %></td>
           <td><%=l(day.scheduled_end_time, format: :hour) if day.scheduled_end_time.present? %></td>
           <td><%=l(day.scheduled_end_time, format: :minute) if day.scheduled_end_time.present? %></td>
-          <td><%=working_times(day.user.fixed_finish, day.scheduled_end_time) if day.scheduled_end_time.present? %></td>
+          <td><%=working_times(day.user.designated_work_finish_time, day.scheduled_end_time) if day.scheduled_end_time.present? %></td>
           <td><%=day.business_outline %></td>
           <td>
             

@@ -18,8 +18,9 @@ class UsersController < ApplicationController
   def create
     @user=User.new(user_params)
     if @user.save
+      log_in @user
       flash[:success]="新規作成に成功しました"
-    　redirect_to @user
+      redirect_to @user
     else
       render :new
     end
@@ -61,6 +62,17 @@ class UsersController < ApplicationController
   end
   
   
+  def update_basic_info
+    @user=User.find(params[:id])
+    if @user.update_attributes(basic_info_params)
+      flash[:success]="基本情報を編集しました"
+    end
+    redirect_to users_url
+  end
+    
+  
+  
+  
   #CSV#
   def import
     User.import(params[:file])
@@ -74,6 +86,10 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name,:email,:password,:password_confirmation)
     end
     
-   
+    
+    def basic_info_params
+      params.require(:user).permit(:name,:email, :password, :password_confirmation,
+      :employee_number, :uid, :affiliation, :basic_work_time, :designated_work_start_time, :designated_work_finish_time)
+    end
   
 end
