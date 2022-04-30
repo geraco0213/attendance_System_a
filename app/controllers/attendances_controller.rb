@@ -162,9 +162,17 @@ class AttendancesController < ApplicationController
   end
   
   
+  #出勤社員一覧ページ用#
   def working
    @attendances=Attendance.where.not(started_at:nil).where(finished_at:nil)
   end
+  
+  
+  #承認ログページ用#
+  def history
+    @attendances=Attendance.where(instructor_one_month_reply:2)
+  end
+  
   
 
     

@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       get 'attendances/edit_comp_notice'
       patch 'attendances/update_comp_notice'
       get 'attendances/working'
+      get 'attendances/history'
     end
     
     #CSV#

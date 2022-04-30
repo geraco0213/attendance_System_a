@@ -72,7 +72,6 @@ class UsersController < ApplicationController
     
   
   
-  
   #CSV#
   def import
     User.import(params[:file])

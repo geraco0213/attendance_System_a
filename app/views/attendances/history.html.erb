@@ -1,0 +1,28 @@
+<% provide(:title, "Log") %>
+
+<table class="table table-bordered table-striped" id="log-table">
+  <thead>
+    <tr>
+      <th>日付</th>
+      <th>変更前出社時間</th>
+      <th>変更前退社時間</th>
+      <th>変更後出社</th>
+      <th>変更後退社</th>
+      <th>指示者</th>
+      <th>承認日</th>
+    </tr>
+  </thead>
+  <% @attendances.each do |day| %>
+  <tbody>
+    <tr>
+      <td><%=l(day.worked_on, format: :short) %></td>
+      <td></td>
+      <td></td>
+      <td><%=l(day.started_at, format: :time) %></td>
+      <td><%=l(day.finished_at, format: :time) %></td>
+      <td><%=day.instructor_one_month_test %></td>
+      <td><%=l(day.updated_at, format: :short) %></td>  <!--4/1は勤怠完全承認時にも更新されるので、アウト-->
+    </tr>
+  </tbody>
+  <% end %>
+</table>
