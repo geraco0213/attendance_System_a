@@ -68,6 +68,7 @@ class AttendancesController < ApplicationController
       one_month_permit_params.each do |id, item|
         attendance = Attendance.find(id)
         attendance.update_attributes!(item)
+        attendance.update_attributes(reply_updated_at:Time.current.change(sec:0))
       end
     end
     flash[:success] = "承認完了"

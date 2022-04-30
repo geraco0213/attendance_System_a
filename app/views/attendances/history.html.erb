@@ -21,7 +21,7 @@
       <td><%=l(day.started_at, format: :time) %></td>
       <td><%=l(day.finished_at, format: :time) %></td>
       <td><%=day.instructor_one_month_test %></td>
-      <td><%=l(day.updated_at, format: :short) %></td>  <!--4/1は勤怠完全承認時にも更新されるので、アウト-->
+      <td><%=l(day.reply_updated_at, format: :short) %></td>  <!--4/1は勤怠完全承認時にも更新されるので、アウト-->
     </tr>
   </tbody>
   <% end %>

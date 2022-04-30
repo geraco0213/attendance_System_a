@@ -27,7 +27,7 @@
         <td><%=attendance.time_field:started_at, class:"form-control" ,readonly:true %></td>
         <td><%=attendance.time_field:finished_at, class:"form-control" ,readonly:true %></td>
       <% else %>
-        <td><%=attendance.time_field:started_at, placeholder: l(day.before_started_at, format: :time), class:"form-control"  %></td>
+        <td><%=attendance.time_field:started_at, class:"form-control"  %></td>
         <td><%=attendance.time_field:finished_at, class:"form-control" %></td>
       <% end %>
       <td><%= f.check_box :tomorrow,id: "tomorrow_one_month" %></td>
