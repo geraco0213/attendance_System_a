@@ -11,14 +11,14 @@ class AttendancesController < ApplicationController
     @user=User.find(params[:user_id])
     @attendance= @user.attendances.find(params[:id])
     if @attendance.before_started_at.nil?
-      if @attendance.update_attributes(before_started_at:Time.current.change(sec:0))
+      if @attendance.update_attributes(started_at:Time.current.change(sec:0), before_started_at:Time.current.change(sec:0), )
         flash[:info]="おはようございます。"
       else
         flash[:danger]=UPDATE_ERROR_MSG
       end
       
     elsif @attendance.before_finished_at.nil?
-      if @attendance.update_attributes(before_finished_at:Time.current.change(sec:0))
+      if @attendance.update_attributes(finished_at:Time.current.change(sec:0), before_finished_at:Time.current.change(sec:0))
         flash[:info]="お疲れ様でした"
       else
         flash[:danger]=UPDATE_ERROR_MSG
