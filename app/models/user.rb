@@ -45,19 +45,38 @@ class User < ApplicationRecord
   end
   
   
-  #以下CSV#
-  def self.import(file)
-    CSV.foreach(file.path, headers: true) do |row|
-      user=find_by(id: row["email"]) || new
-      user.attributes=row.to_hash.slice(*updatable_attributes)
-      user.save
+  #検索用?#
+  def self.search(search) 
+    if search 
+      where(['name LIKE ?', "%#{search}%"]) #検索とnameの部分一致を表示。
+    else
+      all 
     end
   end
   
-  def self.updatable_attributes
-    ["id", "name", "email"]
+  
+  #以下CSV#
+  def self.import(file)
+    CSV.foreach(file.path, headers: true) do |row|
+      unless user = User.find_by(email: row["email"])
+        user = User.new        
+        user.attributes = row.to_hash.slice(*updatable_attributes)
+        user.save!
+        return 0
+      else
+        user.attributes = row.to_hash.slice(*updatable_attributes)
+        user.save!
+        return 1    
+      end
+    end
   end
   
+  
+  def self.updatable_attributes
+    ["name","email", "password", "password_confirmation"]
+  end
+
+
   
   
   

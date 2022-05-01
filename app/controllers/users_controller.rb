@@ -72,12 +72,24 @@ class UsersController < ApplicationController
     
   
   
-  #CSV#
   def import
-    User.import(params[:file])
-    redirect_to users_url
+    if params[:csv_file].blank?
+      flash[:danger] = "読み込むCSVを選択してください"
+      redirect_to action: 'index'
+    elsif File.extname(params[:csv_file].original_filename) != ".csv"
+      flash[:danger] = "csvファイルのみ読み込み可能です"
+      redirect_to action: 'index'
+    else
+      User.import(params[:csv_file])
+       if 0
+         flash[:success] = "データ情報を追加しました"
+         redirect_to action: 'index'
+       else
+         flash[:success] = "データ情報を更新しました"
+         redirect_to action: 'index'
+       end
+    end
   end
-  
   
   
   private  #部署などの基本情報はまだ#
