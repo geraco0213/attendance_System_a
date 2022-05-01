@@ -32,7 +32,7 @@
       <% end %>
       <td><%= attendance.check_box:tomorrow_one_month, id: "tomorrow_one_month" %></td>
       <td>
-        <% if day.started_at.present? && day.finished_at.present? %>
+        <% if day.started_at.present? && day.finished_at.present? && ! day.tomorrow_one_month? %>
           <%= working_times(day.started_at, day.finished_at) %>
         <% elsif day.started_at.present? && day.finished_at.present? && day.tomorrow_one_month? %>
           <%= working_times_tomorrow(day.started_at, day.finished_at) %>

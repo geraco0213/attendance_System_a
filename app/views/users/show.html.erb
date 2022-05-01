@@ -102,15 +102,24 @@
           <td><%=l(day.finished_at, format: :minute) if day.finished_at.present? %></td>
           <td></td>
           <td>
-            <% if day.started_at.present? && day.finished_at.present? %>
+            <% if day.started_at.present? && day.finished_at.present? && ! day.tomorrow_one_month? %>
               <%=str_times=working_times(day.started_at, day.finished_at) %>
               <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
+            <% elsif day.started_at.present? && day.finished_at.present? && day.tomorrow_one_month? %>
+              <%=str_times=working_times_tomorrow(day.started_at, day.finished_at) %>
+              <% @total_working_times_tomorrow = @total_working_times_tomorrow.to_f + str_times.to_f %>
             <% end %>
           </td>
           <td><%= day.note %></td>
           <td><%=l(day.scheduled_end_time, format: :hour) if day.scheduled_end_time.present? %></td>
           <td><%=l(day.scheduled_end_time, format: :minute) if day.scheduled_end_time.present? %></td>
-          <td><%=working_times(day.user.designated_work_finish_time, day.scheduled_end_time) if day.scheduled_end_time.present? %></td>
+          <td>
+            <% if day.scheduled_end_time.present? && ! day.tomorrow? %>
+              <%=working_times(day.user.designated_work_finish_time, day.scheduled_end_time) %>
+            <% elsif day.scheduled_end_time.present? && day.tomorrow? %>
+              <%=working_times_tomorrow(day.user.designated_work_finish_time, day.scheduled_end_time) %>
+            <% end %>
+          </td>
           <td><%=day.business_outline %></td>
           <td>
             

@@ -1,12 +1,5 @@
 <% provide(:title, "Log") %>
 
-<%= f.date_field :reply_updated_at_gteq,
-                  include_blank: true,
-                  class: 'form-control'%>〜 #「〜」と書くと分かりやすい
-<%= f.date_field :reply_updated_at_lteq_end_of_day, #さっき設定したやつ
-                  include_blank: true,
-                  class: 'form-control'%>
-
 <table class="table table-bordered table-striped" id="log-table">
   <thead>
     <tr>
