@@ -176,6 +176,33 @@ class AttendancesController < ApplicationController
   end
   
   
+  #以下、CSV出力用#
+  def index
+    @user=User.find(params[:user_id])
+    @attendances=@user.attendances
+    respond_to do |format|
+      format.html
+      format.csv do |csv|
+        send_attendances_csv(@attendances)
+      end
+    end
+  end
+
+  
+  def send_attendances_csv(attendances)
+    csv_data = CSV.generate do |csv|
+      header = %w(worked_on started_at finished_at)
+      csv << header
+      attendances.each do |attendance|
+        values = [attendance.worked_on, attendance.started_at, attendance.finished_at]
+        csv << values
+      end
+    end
+    send_data(csv_data, filename: "attendances.csv")
+  end
+  
+  
+  
 
     
   

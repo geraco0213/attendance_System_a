@@ -51,11 +51,11 @@ class User < ApplicationRecord
     CSV.foreach(file.path, headers: true) do |row|
       unless user = User.find_by(email: row["email"])
         user = User.new        
-        user.attributes = row.to_hash.slice(updatable_attributes)
+        user.attributes = row.to_hash.slice(*updatable_attributes)
         user.save!
         return 0
       else
-        user.attributes = row.to_hash.slice(updatable_attributes)
+        user.attributes = row.to_hash.slice(*updatable_attributes)
         user.save!
         return 1    
       end
