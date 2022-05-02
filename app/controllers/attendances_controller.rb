@@ -172,7 +172,10 @@ class AttendancesController < ApplicationController
   #承認ログページ用#
   def history
     @user=User.find(params[:id])
-    @attendances=@user.attendances.where(instructor_one_month_reply:2)
+    # 検索オブジェクト
+    @search = @user.attendances.where(instructor_one_month_reply:2).ransack(params[:q])
+    # 検索結果
+    @attendances = @search.result
   end
   
   

@@ -1,5 +1,15 @@
 <% provide(:title, "Log") %>
 
+<%= search_form_for @search, url:attendances_history_user_path(@user) do |f| %>
+  <%= f.label :reply_updated_at_gteq, "承認日" %>
+  <%= f.datetime_field :reply_updated_at_gteq %>
+  <%= f.label :reply_updated_at_lteq, " ~ " %>
+  <%= f.datetime_field :reply_updated_at_lteq %>
+
+  <%= f.submit %>
+<% end %>
+
+
 <table class="table table-bordered table-striped" id="log-table">
   <thead>
     <tr>
@@ -12,6 +22,8 @@
       <th>承認日</th>
     </tr>
   </thead>
+
+  
   <% @attendances.each do |day| %>
   <tbody>
     <tr>
