@@ -24,17 +24,15 @@ class PlacesController < ApplicationController
   end
   
    
-
-  
-  
+   
   def edit
   end
   
   
-  
   def update
     if @place.update_attributes(place_params)
-    flash[:success]="更新しました"
+     flash[:success]="更新しました"
+     redirect_to places_url
     end
   end
   
