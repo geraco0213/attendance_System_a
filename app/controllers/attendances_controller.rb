@@ -190,10 +190,11 @@ class AttendancesController < ApplicationController
   
   #以下、CSV出力用#
   def output
+    @puts=@attendances.where(instructor_one_month_reply:2)
     respond_to do |format|
       format.html
       format.csv do |csv|
-        send_attendances_csv(@attendances)
+        send_attendances_csv(@puts)
       end
     end
   end
@@ -203,8 +204,8 @@ class AttendancesController < ApplicationController
     csv_data = CSV.generate do |csv|
       header = %w(日付 出勤時間 退勤時間)
       csv << header
-      @attendances.each do |attendance|
-        values = [l(attendance.worked_on, format: :short), attendance.started_at, attendance.finished_at]
+      @puts.each do |put|
+        values = [l(put.worked_on, format: :short), l(put.started_at, format: :time), l(put.finished_at, format: :time)]
         csv << values
       end
     end
