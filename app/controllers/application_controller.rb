@@ -17,14 +17,20 @@ class ApplicationController < ActionController::Base
   end
   
   def correct_user
-    unless current_user?(@user)
-    flash[:danger]="権限がありません"
-    redirect_to(root_url)
+    @user=User.find(params[:user_id]) if @user.blank?
+    unless current_user?(@user) 
+      flash[:danger]="権限がありません"
+      redirect_to(root_url)
     end
-  end    
+  end
   
   def admin_user
     redirect_to root_url unless current_user.admin?
+  end
+  
+  
+  def general_user
+    redirect_to root_url if current_user.admin?
   end
   
   def superior_user
@@ -32,18 +38,9 @@ class ApplicationController < ActionController::Base
   end
   
   
-  def admin_or_correct_user
-    @user=User.find(params[:user_id]) if @user.blank?
-    unless current_user?(@user) || current_user.admin? 
-      flash[:danger]="権限がありません"
-      redirect_to(root_url)
-    end
-  end
   
-  
-  def admin_or_correct_or_superior_user
-    @user=User.find(params[:user_id]) if @user.blank?
-    unless current_user?(@user) || current_user.admin? || current_user.superior?   #superiorを追記#
+  def correct_or_superior_user
+    unless current_user?(@user) || current_user.superior?   #superiorを追記#
       flash[:danger]="権限がありません"
       redirect_to(root_url)
     end

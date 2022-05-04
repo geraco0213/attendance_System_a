@@ -2,8 +2,9 @@ class AttendancesController < ApplicationController
   include AttendancesHelper
   
   before_action :set_user, only:[:edit_one_month_request,:update_one_month_request]
-  before_action :logged_in_user, only:[:update,:edit_one_month_request,:update_one_month_request, :working] 
-  before_action :admin_or_correct_user, only:[:update,:edit_one_month_request,:update_one_month_request]
+  before_action :logged_in_user, only:[:update,:edit_one_month_request,:update_one_month_request, :working]
+  before_action :general_user, only:[:update,:edit_one_month_request,:update_one_month_request ]
+  before_action :correct_user, only:[:update,:edit_one_month_request,:update_one_month_request]
   before_action :admin_user, only:[:working]
   before_action :set_one_month, only:[:edit_one_month_request]
   
