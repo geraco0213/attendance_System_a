@@ -9,11 +9,7 @@ class AttendancesController < ApplicationController
                                        :edit_overtime_request, :update_overtime_request, :edit_overtime_notice, :update_overtime_notice,
                                        :update_comp_request, :edit_comp_notice, :update_comp_notice, 
                                        :working, :history]
-  before_action :general_user, only:[:update,:edit_one_month_request,:update_one_month_request, :edit_one_month_notice, :update_one_month_notice,
-                                     :edit_overtime_request, :update_overtime_request, :edit_overtime_notice, :update_overtime_notice, 
-                                     :update_comp_request, :edit_comp_notice, :update_comp_notice,
-                                     :history]
-  before_action :correct_user, only:[:update,:edit_one_month_request,:update_one_month_request, :edit_one_month_notice, :update_one_month_notice,
+  before_action :correct_general_user, only:[:update,:edit_one_month_request,:update_one_month_request, :edit_one_month_notice, :update_one_month_notice,
                                      :edit_overtime_request, :update_overtime_request, :edit_overtime_notice, :update_overtime_notice, 
                                      :update_comp_request, :edit_comp_notice, :update_comp_notice,
                                      :history]

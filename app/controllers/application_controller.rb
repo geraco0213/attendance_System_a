@@ -16,9 +16,9 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  def correct_user
+  def correct_general_user
     @user=User.find(params[:user_id]) if @user.blank?
-    unless current_user?(@user) 
+    if current_user.admin? || ! current_user?(@user) 
       flash[:danger]="権限がありません"
       redirect_to(root_url)
     end
@@ -28,10 +28,6 @@ class ApplicationController < ActionController::Base
     redirect_to root_url unless current_user.admin?
   end
   
-  
-  def general_user
-    redirect_to root_url if current_user.admin?
-  end
   
   def superior_user
     redirect_to root_url unless current_user.superior?
