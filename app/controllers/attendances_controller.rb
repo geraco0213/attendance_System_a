@@ -2,12 +2,15 @@ class AttendancesController < ApplicationController
   include AttendancesHelper
   
   before_action :set_user, only:[:edit_one_month_request,:update_one_month_request ,:edit_one_month_notice, :update_one_month_notice,
-                                 :edit_overtime_notice, :update_overtime_notice]
+                                 :edit_overtime_notice, :update_overtime_notice,
+                                 :edit_comp_notice, :update_comp_notice]
   before_action :logged_in_user, only:[:update,:edit_one_month_request,:update_one_month_request, :edit_one_month_notice, :update_one_month_notice,
-                                       :edit_overtime_request, :update_overtime_request, :edit_overtime_notice, :update_overtime_notice, :working]
+                                       :edit_overtime_request, :update_overtime_request, :edit_overtime_notice, :update_overtime_notice,
+                                       :update_comp_request, :edit_comp_notice, :update_comp_notice, :working]
   before_action :general_user, only:[:update,:edit_one_month_request,:update_one_month_request ]
   before_action :correct_user, only:[:update,:edit_one_month_request,:update_one_month_request, :edit_one_month_notice, :update_one_month_notice,
-                                     :edit_overtime_request, :update_overtime_request, :edit_overtime_notice, :update_overtime_notice ]
+                                     :edit_overtime_request, :update_overtime_request, :edit_overtime_notice, :update_overtime_notice, 
+                                     :update_comp_request, :edit_comp_notice, :update_comp_notice]
   before_action :admin_user, only:[:working]
   before_action :set_one_month, only:[:edit_one_month_request]
   
@@ -110,7 +113,6 @@ class AttendancesController < ApplicationController
   
   #残業の申請内容を見て承認するページ#
   def edit_overtime_notice
-    @user=User.find(params[:id])
     @attendances=Attendance.where(instructor_test:@user.name).where(change:false)
   end
   
