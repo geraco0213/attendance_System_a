@@ -118,7 +118,7 @@ class AttendancesController < ApplicationController
         attendance.update_attributes!(item)
       end
     end
-    flash[:success] = ""
+    flash[:success] = "変更内容を送信しました"
     redirect_to user_url
   rescue ActiveRecord::RecordInvalid 
     flash[:danger] = "無効な入力データがあった為、変更をキャンセルしました。"
@@ -194,10 +194,10 @@ class AttendancesController < ApplicationController
   
   def send_attendances_csv(attendances)
     csv_data = CSV.generate do |csv|
-      header = %w(worked_on started_at finished_at)
+      header = %w(日付 出勤時間 退勤時間)
       csv << header
       attendances.each do |attendance|
-        values = [attendance.worked_on, attendance.started_at, attendance.finished_at]
+        values = [l(attendance.worked_on, format: :short), attendance.started_at, attendance.finished_at]
         csv << values
       end
     end
