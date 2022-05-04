@@ -48,7 +48,7 @@ class User < ApplicationRecord
   
   #以下CSV#
   def self.import(file)
-    CSV.foreach(file.path, headers: true) do |row|
+    CSV.foreach(file.path, headers: true, encoding: 'Shift_JIS:UTF-8') do |row|
       unless user = User.find_by(email: row["email"])
         user = User.new        
         user.attributes = row.to_hash.slice(*updatable_attributes)
