@@ -57,11 +57,11 @@ ActiveRecord::Schema.define(version: 20220430210732) do
     t.string "remember_digest"
     t.boolean "admin"
     t.string "affiliation"
-    t.datetime "basic_work_time", default: "2022-04-30 23:00:00"
-    t.datetime "work_time", default: "2022-04-30 22:30:00"
+    t.datetime "basic_work_time", default: "2022-05-01 23:00:00"
+    t.datetime "work_time", default: "2022-05-01 22:30:00"
     t.boolean "superior", default: false
-    t.datetime "designated_work_start_time", default: "2022-05-01 00:00:00"
-    t.datetime "designated_work_finish_time", default: "2022-05-01 09:00:00"
+    t.datetime "designated_work_start_time", default: "2022-05-02 00:00:00"
+    t.datetime "designated_work_finish_time", default: "2022-05-02 09:00:00"
     t.string "instructor_comp_reply"
     t.boolean "change_comp", default: false
     t.string "instructor_comp_test"
