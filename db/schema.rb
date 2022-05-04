@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20220430210732) do
     t.integer "instructor_comp_reply"
     t.datetime "before_started_at"
     t.datetime "before_finished_at"
-    t.datetime "reply_updated_at"
+    t.date "reply_updated_at"
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 

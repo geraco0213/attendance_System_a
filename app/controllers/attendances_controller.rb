@@ -71,10 +71,10 @@ class AttendancesController < ApplicationController
         attendance.update_attributes(reply_updated_at:Time.current.change(sec:0))
       end
     end
-    flash[:success] = "承認完了"
+    flash[:success] = "変更内容を送信しました"
     redirect_to user_url
   rescue ActiveRecord::RecordInvalid 
-    flash[:danger] = "無効な入力データがあった為、承認をキャンセルしました。"
+    flash[:danger] = "無効な入力データがあった為、変更をキャンセルしました。"
     redirect_to attendances_edit_overtime_notice_user_url
   end
   
@@ -91,7 +91,7 @@ class AttendancesController < ApplicationController
     @user= User.find(params[:user_id])
     @attendance= @user.attendances.find(params[:id])
     if params[:attendance][:scheduled_end_time].blank? || params[:attendance][:business_outline].blank? || params[:attendance][:instructor_test].blank?
-      flash[:danger]="入力に不備があり、申請をキャンセルしました"
+      flash[:danger]="無効な入力データがあった為、申請をキャンセルしました"
     else
       @attendance.update_attributes(overtime_request_params)
       if @attendance.change?
@@ -118,10 +118,10 @@ class AttendancesController < ApplicationController
         attendance.update_attributes!(item)
       end
     end
-    flash[:success] = "承認完了"
+    flash[:success] = ""
     redirect_to user_url
   rescue ActiveRecord::RecordInvalid 
-    flash[:danger] = "無効な入力データがあった為、承認をキャンセルしました。"
+    flash[:danger] = "無効な入力データがあった為、変更をキャンセルしました。"
     redirect_to attendances_edit_overtime_notice_user_url
   end
   
@@ -155,7 +155,7 @@ class AttendancesController < ApplicationController
         attendance.update_attributes!(item)
       end
     end
-    flash[:success] = "承認完了"
+    flash[:success] = "変更内容を送信しました"
     redirect_to user_url
   rescue ActiveRecord::RecordInvalid 
     flash[:danger] = "無効な入力データがあった為、承認をキャンセルしました。"

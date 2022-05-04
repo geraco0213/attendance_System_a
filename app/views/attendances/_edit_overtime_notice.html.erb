@@ -11,7 +11,7 @@
 				<div class="col-md-10 col-md-offset-1">
         <%= form_with(model:@user, url:attendances_update_overtime_notice_user_path(@user), method: :patch, local:true) do |f| %>
           <% @attendances.each do |day| %>
-          <%= day.user.name %>
+          <p class="request-titel"><%= "【#{day.user.name}からの残業申請】" %></p>
   
           <table class="table table-bordered table-striped table-condensed" id="overtime-notice-table" %>
             <thead>
@@ -37,12 +37,12 @@
 			        <td><%=l(day.worked_on, format: :short) %></td>
 			        <td><%=$days_of_the_week[day.worked_on.wday] %></td>
 			        <td><%=l(day.scheduled_end_time, format: :time) %></td>
-		    	    <td><%=l(day.user.designated_work_finish_time, format: :time) %></td>
+		    	    <td><%=l(day.user.designated_work_end_time, format: :time) %></td>
 		 	        <td>
 		 	        	<% if day.scheduled_end_time.present? && ! day.tomorrow? %>
-		 	        	  <%=working_times(day.user.designated_work_finish_time, day.scheduled_end_time) %>
+		 	        	  <%=working_times(day.user.designated_work_end_time, day.scheduled_end_time) %>
 		 	        	<% elsif day.scheduled_end_time.present? && day.tomorrow? %>
-		 	        	  <%=working_times_tomorrow(day.user.designated_work_finish_time, day.scheduled_end_time) %>
+		 	        	  <%=working_times_tomorrow(day.user.designated_work_end_time, day.scheduled_end_time) %>
 		 	        	<% end %>
 		 	        </td>
 			        <td><%=day.business_outline %></td>
