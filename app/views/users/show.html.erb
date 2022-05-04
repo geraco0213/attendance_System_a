@@ -50,7 +50,7 @@
     <% if current_user?(@user) %>
       <div>
         <%=link_to "勤怠を編集", attendances_edit_one_month_request_user_path(date:@first_day), class: "btn btn-primary" %>
-        <%=link_to "csv出力",user_attendances_path(@user, format: :csv), class:"btn btn-primary" %>
+        <%=link_to "csv出力",attendances_output_user_path(date:@first_day, format: :csv), class:"btn btn-primary" %>
       </div>
       <div>
         <%=link_to "勤怠修正ログ(承認済)", attendances_history_user_path(@user), class: "btn btn-primary" %>

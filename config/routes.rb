@@ -21,12 +21,13 @@ Rails.application.routes.draw do
       patch 'attendances/update_comp_notice'
       get 'attendances/working'
       get 'attendances/history'
+      get 'attendances/output'
     end
     
     #CSV#
     collection {post :import}
     
-    resources :attendances, only: [:update, :index] do
+    resources :attendances, only: :update do
       member do
         get 'edit_overtime_request'
         patch 'update_overtime_request'
