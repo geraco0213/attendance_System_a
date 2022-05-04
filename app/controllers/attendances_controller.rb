@@ -127,10 +127,11 @@ class AttendancesController < ApplicationController
   
   #勤怠完全版申請が送信されるページ#
   def update_comp_request
-    
     @user=User.find(params[:user_id])
-    @attendance=@user.attendances.find(params[:id])  #ここ、@attendance=@user.attendances.find_by(worked_on:@first_day)より改変#
-    if @attendance.update_attributes(comp_request_params)
+    @attendance=@user.attendances.find(params[:id])
+    if params[:attendance][:instructor_comp_test].blank?
+      flash[:danger]="無効なデータがあった為、申請をキャンセルしました"
+    elsif @attendance.update_attributes(comp_request_params)
       if @attendance.change_comp?
         @attendance.update_attributes(change_comp:false)
       end

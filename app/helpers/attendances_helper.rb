@@ -27,10 +27,16 @@ module AttendancesHelper
         next
       elsif item[:started_at].present? && item[:finished_at].present? && item[:instructor_one_month_test].present?
         next
-      elsif item[:started_at].present? || item[:finished_at].present?
+      elsif item[:started_at].present? && item[:finished_at].blank? && item[:instructor_one_month_test].blank?
+        next
+      elsif item[:started_at].blank? && item[:finished_at].present? && item[:instructor_one_month_test].blank?
+        next
+      elsif item[:started_at].present? && item[:finished_at].present? && item[:instructor_one_month_test].blank?
+        next
+      elsif item[:started_at].present? && item[:finished_at].blank? && item[:instructor_one_month_test].present?
         attendances=false
         break
-      elsif item[:started_at].present? && item[:finished_at].present? && item[:instructor_one_month_test].blank?
+      elsif item[:started_at].blank? && item[:finished_at].present? && item[:instructor_one_month_test].present?
         attendances=false
         break
       elsif item[:started_at].blank? && item[:finished_at].blank? && item[:instructor_one_month_test].present?
