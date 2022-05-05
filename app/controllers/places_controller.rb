@@ -33,6 +33,8 @@ class PlacesController < ApplicationController
     if @place.update_attributes(place_params)
      flash[:success]="更新しました"
      redirect_to places_url
+    else
+      render :edit
     end
   end
   
