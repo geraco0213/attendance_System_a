@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
+      get 'edit_basic_info'  #←使わない#
       patch 'update_basic_info'
       get 'attendances/edit_one_month_request'
       patch 'attendances/update_one_month_request'
@@ -24,7 +25,7 @@ Rails.application.routes.draw do
       get 'attendances/output'
     end
     
-    #CSV#
+    #CSV入力#
     collection {post :import}
     
     resources :attendances, only: :update do

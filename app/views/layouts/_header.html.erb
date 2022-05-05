@@ -9,7 +9,7 @@
               <li><%=link_to "利用者一覧", users_path, class:"header-list" %></li>
               <li><%=link_to "出勤社員一覧", attendances_working_user_path(current_user) %></li>
               <li><%=link_to "拠点一覧", places_path %></li>
-              <li><%=link_to "基本情報の修正", '#', clas:"header-list" %></li>
+              <li><%=link_to "基本情報の修正", edit_basic_info_user_path(current_user), clas:"header-list" %></li>
             <% end %>
             <% unless current_user.admin? %>
             <li class="dropdown">
