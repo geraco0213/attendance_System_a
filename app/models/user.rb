@@ -46,29 +46,41 @@ class User < ApplicationRecord
   
   
   
-  #以下CSV#
+  #csvファイルの内容をDBに登録する
   def self.import(file)
-    CSV.foreach(file.path, headers: true, encoding: 'Shift_JIS:UTF-8') do |row|
-      unless user = User.find_by(email: row["email"])
-        user = User.new        
-        user.attributes = row.to_hash.slice(*updatable_attributes)
-        user.save!
-        return 0
-      else
-        user.attributes = row.to_hash.slice(*updatable_attributes)
-        user.save!
-        return 1    
+    imported_num = 0
+  #   #文字コード変換のためにKernel#openとCSV#newを併用
+  #   #参考： http://qiita.com/labocho/items/8559576b71642b79df67
+    open(file.path, 'r:cp932:utf-8', undef: :replace) do |f|
+      csv = CSV.new(f, :headers => :first_row) #エラーが出る
+      csv.each do |row|
+        next if row.header_row?
+
+  #       #CSVの行情報をHASHに変換
+        table = Hash[[row.headers, row.fields].transpose]
+
+  #       #登録済みデータ情報
+  #       #登録されてなければ作成
+        user = find_by(:name => table['name'])
+        if user.nil?
+          user= new
+        end
+
+  #       #データ情報更新
+        user.attributes = table.to_hash.slice(
+          *table.to_hash.except(:id, :created_at, :updated_at).keys)
+
+  #       #バリデーションokの場合は保存
+        if user.valid?
+          user.save!
+          imported_num += 1
+        end
       end
     end
-  end
-  
-  
-  def self.updatable_attributes
-    ["name", "email", "affiliation", "employee_number", "uid", "basic_work_time", "designated_work_start_time", "designated_work_end_time", "superior", "admin", "password"]
+
+  #   #更新件数を返却
+    imported_num
   end
 
-
-  
-  
   
 end

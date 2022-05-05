@@ -74,24 +74,10 @@ class UsersController < ApplicationController
   
   def import
     if params[:csv_file].blank?
-      flash[:danger] = "読み込むCSVを選択してください"
-      redirect_to users_url
-    elsif File.extname(params[:csv_file].original_filename) != ".csv"
-      flash[:danger] = "csvファイルのみ読み込み可能です"
-      redirect_to users_url
+      redirect_to action: 'index', error: '読み込むCSVを選択してください'
     else
-     ActiveRecord::Base.transaction do
-      User.import(params[:csv_file])
-       if 0
-         flash[:success] = "データ情報を追加しました"
-       else
-         flash[:success] = "データ情報を更新しました"
-       end
-       redirect_to users_url
-     rescue ActiveRecord::RecordInvalid 
-       flash[:danger] = "無効な入力データがあった為、処理をキャンセルしました。"
-       redirect_to users_url
-     end
+      num = User.import(params[:csv_file])
+      redirect_to action: 'index', notice: "#{ num.to_s }件のデータ情報を追加/更新しました"
     end
   end
   
@@ -108,3 +94,4 @@ class UsersController < ApplicationController
     end
   
 end
+
