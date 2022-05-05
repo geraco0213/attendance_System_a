@@ -1,7 +1,7 @@
 <% provide(:title, "Log") %>
 
 <%= search_form_for @search, url:attendances_history_user_path(@user) do |f| %>
-  <%= f.label :reply_updated_at_gteq, "承認日" %>
+  <%= f.label :reply_updated_at_gteq, "承認日で検索" %>
   <%= f.date_field :reply_updated_at_gteq %>
   <%= f.label :reply_updated_at_lteq, " ~ " %>
   <%= f.date_field :reply_updated_at_lteq %>
