@@ -51,7 +51,7 @@ class User < ApplicationRecord
     imported_num = 0
   #   #文字コード変換のためにKernel#openとCSV#newを併用
   #   #参考： http://qiita.com/labocho/items/8559576b71642b79df67
-    open(file.path, 'r:cp932:utf-8', undef: :replace) do |f|
+    open(file.path, 'r:cp932:utf-8',undef: :replace) do |f|
       csv = CSV.new(f, :headers => :first_row) #エラーが出る
       csv.each do |row|
         next if row.header_row?
@@ -61,7 +61,7 @@ class User < ApplicationRecord
 
   #       #登録済みデータ情報
   #       #登録されてなければ作成
-        user = find_by(:name => table['name'])
+        user = find_by(:email=> table['email'])
         if user.nil?
           user= new
         end

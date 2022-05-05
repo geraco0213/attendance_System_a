@@ -74,11 +74,12 @@ class UsersController < ApplicationController
   
   def import
     if params[:csv_file].blank?
-      redirect_to action: 'index', error: '読み込むCSVを選択してください'
+      flash[:danger]="読み込むCSVを選択してください"
     else
       num = User.import(params[:csv_file])
-      redirect_to action: 'index', notice: "#{ num.to_s }件のデータ情報を追加/更新しました"
+      flash[:success]="#{ num.to_s }件のデータ情報を追加/更新しました"
     end
+    redirect_to users_url
   end
   
   
