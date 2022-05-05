@@ -16,7 +16,7 @@
         <td>所属   <%= @user.affiliation?? @user.affiliation : "未所属" %></td>
         <td>氏名   <%=@user.name %></td>
         <td>コード</td>
-        <td></td>
+        <td>5555</td>
         <td>出勤日数   <%= @worked_sum %>日</td>
         <td>締め   <%=l(@last_day, format: :shortA) %></td>
       </tr>
@@ -139,7 +139,7 @@
                 残業否認
               <% elsif day.instructor_reply==1%>
                 <%=day.instructor_test %>に残業申請中
-              <% elsif day.instructor_reply==4%>
+              <% else %>
                 <%=day.instructor_test %>に残業申請中
               <% end %>
             <% end %>
@@ -153,7 +153,7 @@
                 勤怠編集否認
               <% elsif day.instructor_one_month_reply==1%>
                 <%=day.instructor_one_month_test %>に残業申請中
-              <% elsif day.instructor_one_month_reply==4%>
+              <% else %>
                 <%=day.instructor_one_month_test %>に残業申請中
               <% end %>
             <% end %>
@@ -179,7 +179,7 @@
               勤怠否認
             <% elsif @attendance.instructor_comp_reply==1%>
               <%=@attendance.instructor_comp_test %>に勤怠申請中
-            <% elsif @attendance.instructor_reply==4%>
+            <% else %>
               <%=@attendance.instructor_comp_test %>に勤怠申請中
             <% end %>
           <% end %>
