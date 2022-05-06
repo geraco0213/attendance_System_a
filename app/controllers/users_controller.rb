@@ -72,6 +72,7 @@ class UsersController < ApplicationController
     
   
   
+  
   def import
     if params[:csv_file].blank?
       flash[:danger]="読み込むCSVを選択してください"
@@ -81,6 +82,11 @@ class UsersController < ApplicationController
     end
     redirect_to users_url
   end
+  
+  
+  
+  
+  
   
   
   private  #部署などの基本情報はまだ#

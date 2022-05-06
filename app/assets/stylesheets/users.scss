@@ -1,17 +1,27 @@
+
+
+
 #user-info-table{
   td{
     text-align:center;
     vertical-align:bottom;
+  }
+  
+  .designated{
     white-space:pre;
+}
+
+  .time-table-title{
+    margin-left:30px;
+    margin-right:30px;
+  }
+  
+  .btn-change{
+    margin-bottom:20px;
   }
     
 }
 
-.time-table-title{
-  margin-left:30px;
-  margin-right:30px;
-  
-}
 
 
 /*通知文*/

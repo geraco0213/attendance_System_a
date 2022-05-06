@@ -4,3 +4,6 @@ config.add_predicate 'lteq_end_of_day',
 :formatter => proc {|v| v.end_of_day},
 :compounds => false
 end
+
+
+#必要？？#

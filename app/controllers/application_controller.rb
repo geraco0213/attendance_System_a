@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
   
   def correct_general_or_superior_user
     if current_user.superior?
-      flash[:success]="勤怠をご確認ください"
+    
     elsif current_user.admin? || ! current_user?(@user)
       flash[:danger]="権限がありません"
       redirect_to(root_url)
