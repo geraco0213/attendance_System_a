@@ -44,6 +44,7 @@ class AttendancesController < ApplicationController
   
   #１か月の勤怠編集の申請内容が送信されるページ#
   def update_one_month_request
+    binding.pry
       ActiveRecord::Base.transaction do
         if attendance_invalid?
           attendances_params.each do |id, item|

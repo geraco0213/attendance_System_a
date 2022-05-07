@@ -142,33 +142,11 @@
           </td>
           <td><%=day.business_outline %></td>
           <td>
-            
-            <% if day.instructor_test.present? && ! day.change? %>
-              <%=day.instructor_test %>に残業申請中
-            <% elsif day.change? %>
-              <% if day.instructor_reply==2%>
-                残業承認済
-              <% elsif day.instructor_reply==3%>
-                残業否認
-              <% elsif day.instructor_reply==1%>
-                <%=day.instructor_test %>に残業申請中
-              <% else %>
-                <%=day.instructor_test %>に残業申請中
-              <% end %>
+            <% if overtime_text=overtime_state(day) %>
+              <%=overtime_text %>
             <% end %>
-    
-            <% if day.instructor_one_month_test.present? && ! day.change_one_month? %>
-              <%=day.instructor_one_month_test %>に勤怠編集申請中
-            <% elsif day.change_one_month? %>
-              <% if day.instructor_one_month_reply==2%>
-                勤怠編集承認済
-              <% elsif day.instructor_one_month_reply==3%>
-                勤怠編集否認
-              <% elsif day.instructor_one_month_reply==1%>
-                <%=day.instructor_one_month_test %>に残業申請中
-              <% else %>
-                <%=day.instructor_one_month_test %>に残業申請中
-              <% end %>
+            <% if one_month_text=one_month_state(day) %>
+              <%=one_month_text %>
             <% end %>
           </td>
         </tr>
@@ -181,20 +159,8 @@
         <td><%= format("%.2f", @total_working_times.to_f) %></td>
         <td colspan="5"></td>
         <td>
-          <% if @attendance.instructor_comp_test.blank? %>
-            所属長承認　未
-          <% elsif @attendance.instructor_comp_test.present? && ! @attendance.change_comp? %>
-            <%=@attendance.instructor_comp_test %>に勤怠申請中
-          <% elsif @attendance.change_comp? %>
-            <% if @attendance.instructor_comp_reply==2%>
-              勤怠承認済
-            <% elsif @attendance.instructor_comp_reply==3%>
-              勤怠否認
-            <% elsif @attendance.instructor_comp_reply==1%>
-              <%=@attendance.instructor_comp_test %>に勤怠申請中
-            <% else %>
-              <%=@attendance.instructor_comp_test %>に勤怠申請中
-            <% end %>
+          <% if comp_text=comp_state(@attendance) %>
+            <%=comp_text %>
           <% end %>
           <% if current_user?(@user) %>
             <%=form_with(model:@attendance, url:update_comp_request_user_attendance_path(@user, @attendance), method: :patch, local:true) do |f| %>
