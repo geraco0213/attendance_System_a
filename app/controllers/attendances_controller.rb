@@ -44,7 +44,7 @@ class AttendancesController < ApplicationController
   
   #１か月の勤怠編集の申請内容が送信されるページ#
   def update_one_month_request
-    binding.pry
+
       ActiveRecord::Base.transaction do
         if attendance_invalid?
           attendances_params.each do |id, item|
@@ -191,7 +191,7 @@ class AttendancesController < ApplicationController
   
   #以下、CSV出力用#
   def output
-    @puts=@attendances.where(instructor_one_month_reply:2)
+    @puts=@attendances.where.not(before_started_at:nil, before_finished_at:nil).or(@attendances.where(instructor_one_month_reply:2))
     respond_to do |format|
       format.html
       format.csv do |csv|
