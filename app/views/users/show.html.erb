@@ -166,7 +166,6 @@
             <%=form_with(model:@attendance, url:update_comp_request_user_attendance_path(@user, @attendance), method: :patch, local:true) do |f| %>
             <table class="table table-bordered table-striped">
                <tbody>
-                 <%= f.hidden_field :worked_on, :value => @attendance.worked_on %>
                  <td><%= f.collection_select(:instructor_comp_test, @superior,:name, :name,{include_blank:true}, {class: "form-control"}) %></td>
                </tbody>
             </table>
