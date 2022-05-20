@@ -47,7 +47,6 @@
 	            </thead>
 	    
 	            <%=f.fields_for "attendances[]", day do |d| %>
-	            <%=d.hidden_field :user_id, :value => day.user.id %>
 	            <tbody>
 	    	         <tr>
 	    	           <td><%=l(day.worked_on, format: :short) %></td>
