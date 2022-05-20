@@ -163,7 +163,7 @@
             <%=comp_text %>
           <% end %>
           <% if current_user?(@user) %>
-            <%=form_with(model:@attendance, url:update_comp_request_user_attendance_path(@user, @attendance), method: :patch, local:true) do |f| %>
+            <%=form_with(model:@attendance, url:update_comp_request_user_attendance_path(@user, @attendance, date:@first_day), method: :patch, local:true) do |f| %>
             <table class="table table-bordered table-striped">
                <tbody>
                  <td><%= f.collection_select(:instructor_comp_test, @superior,:name, :name,{include_blank:true}, {class: "form-control"}) %></td>

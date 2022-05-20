@@ -147,7 +147,7 @@ class AttendancesController < ApplicationController
       end
       flash[:success]="申請しました"
     end
-    redirect_to user_url(@user)
+    redirect_to user_url(@user, date:params[:date])
   end
   
   #勤怠完全版申請を見て承認するページ#
