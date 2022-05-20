@@ -102,7 +102,7 @@
       <% @attendances.each do |day| %>
         <tr>
           <% if current_user?(@user) %>
-            <td><%=link_to "残業申請", edit_overtime_request_user_attendance_path(@user,day), remote:true,class:"btn btn-primary" %></td>
+            <td><%=link_to "残業申請", edit_overtime_request_user_attendance_path(@user, day, date:@first_day), remote:true,class:"btn btn-primary" %></td>
             
           <% else %>
             <td></td>

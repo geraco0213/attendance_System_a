@@ -44,7 +44,6 @@ class AttendancesController < ApplicationController
   
   #１か月の勤怠編集の申請内容が送信されるページ#
   def update_one_month_request
-
       ActiveRecord::Base.transaction do
         if attendance_invalid?
           attendances_params.each do |id, item|
@@ -91,6 +90,7 @@ class AttendancesController < ApplicationController
   
   #残業の申請ページ#
   def edit_overtime_request
+    @first_day=params[:date].nil?? Date.current.beginning_of_month : params[:date].to_date
     @user = User.find(params[:user_id])
     @attendance=@user.attendances.find(params[:id])
     @superior=User.where(superior:true).where.not(id:@user.id)
@@ -109,13 +109,14 @@ class AttendancesController < ApplicationController
       end
       flash[:success]="残業申請を受け付けました"
     end
-    redirect_to user_url(@user) 
+    redirect_to user_url(@user, date:params[:date])
   end
     
   
   
   #残業の申請内容を見て承認するページ#
   def edit_overtime_notice
+    @first_day=params[:date].nil?? Date.current.beginning_of_month : params[:date].to_date
     @attendances=Attendance.where(instructor_test:@user.name).where(change:false)
   end
   
