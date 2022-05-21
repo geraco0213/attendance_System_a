@@ -1,9 +1,7 @@
 class Attendance < ApplicationRecord
   belongs_to :user
   
-  def user
-    User.find(self.user_id)
-  end
+  
   
   validates :worked_on, presence:true
   validates :note, length:{maximum:50}
