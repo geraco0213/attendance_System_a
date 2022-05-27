@@ -2,15 +2,15 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220430210732) do
+ActiveRecord::Schema.define(version: 2022_04_30_210732) do
 
   create_table "attendances", force: :cascade do |t|
     t.date "worked_on"
@@ -57,13 +57,14 @@ ActiveRecord::Schema.define(version: 20220430210732) do
     t.string "remember_digest"
     t.boolean "admin"
     t.string "affiliation"
-    t.datetime "basic_work_time", default: "2022-05-19 23:00:00"
-    t.datetime "work_time", default: "2022-05-19 22:30:00"
+    t.datetime "basic_work_time", default: "2022-05-26 23:00:00"
+    t.datetime "work_time", default: "2022-05-26 22:30:00"
     t.boolean "superior", default: false
-    t.datetime "designated_work_start_time", default: "2022-05-20 00:00:00"
-    t.datetime "designated_work_end_time", default: "2022-05-20 09:00:00"
+    t.datetime "designated_work_start_time", default: "2022-05-27 00:00:00"
+    t.datetime "designated_work_end_time", default: "2022-05-27 09:00:00"
     t.integer "employee_number"
     t.string "uid"
   end
 
+  add_foreign_key "attendances", "users"
 end

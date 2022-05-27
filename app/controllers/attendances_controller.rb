@@ -21,14 +21,14 @@ class AttendancesController < ApplicationController
     @user=User.find(params[:user_id])
     @attendance= @user.attendances.find(params[:id])
     if @attendance.before_started_at.nil?
-      if @attendance.update_attributes(started_at:Time.current.change(sec:0), before_started_at:Time.current.change(sec:0), )
+      if @attendance.update(started_at:Time.current.change(sec:0), before_started_at:Time.current.change(sec:0), )
         flash[:info]="おはようございます。"
       else
         flash[:danger]=UPDATE_ERROR_MSG
       end
       
     elsif @attendance.before_finished_at.nil?
-      if @attendance.update_attributes(finished_at:Time.current.change(sec:0), before_finished_at:Time.current.change(sec:0))
+      if @attendance.update(finished_at:Time.current.change(sec:0), before_finished_at:Time.current.change(sec:0))
         flash[:info]="お疲れ様でした"
       else
         flash[:danger]=UPDATE_ERROR_MSG
@@ -48,9 +48,9 @@ class AttendancesController < ApplicationController
         if attendance_invalid?
           attendances_params.each do |id, item|
             attendance = Attendance.find(id)
-            attendance.update_attributes!(item)
+            attendance.update!(item)
             if attendance.change_one_month?
-              attendance.update_attributes(change_one_month:false)
+              attendance.update(change_one_month:false)
             end
           end
             flash[:success] = "1ヶ月分の勤怠情報を申請しました。"
@@ -76,8 +76,8 @@ class AttendancesController < ApplicationController
     ActiveRecord::Base.transaction do
       one_month_permit_params.each do |id, item|
         attendance = Attendance.find(id)
-        attendance.update_attributes!(item)
-        attendance.update_attributes(reply_updated_at:Time.current.change(sec:0))
+        attendance.update!(item)
+        attendance.update(reply_updated_at:Time.current.change(sec:0))
       end
     end
     flash[:success] = "変更内容を送信しました"
@@ -103,9 +103,9 @@ class AttendancesController < ApplicationController
     if params[:attendance][:scheduled_end_time].blank? || params[:attendance][:business_outline].blank? || params[:attendance][:instructor_test].blank?
       flash[:danger]="無効な入力データがあった為、申請をキャンセルしました"
     else
-      @attendance.update_attributes(overtime_request_params)
+      @attendance.update(overtime_request_params)
       if @attendance.change?
-        @attendance.update_attributes(change:false)
+        @attendance.update(change:false)
       end
       flash[:success]="残業申請を受け付けました"
     end
@@ -125,7 +125,7 @@ class AttendancesController < ApplicationController
     ActiveRecord::Base.transaction do
       overtime_permit_params.each do |id, item|
         attendance = Attendance.find(id)
-        attendance.update_attributes!(item)
+        attendance.update!(item)
       end
     end
     flash[:success] = "変更内容を送信しました"
@@ -141,9 +141,9 @@ class AttendancesController < ApplicationController
     @attendance=@user.attendances.find(params[:id])
     if params[:attendance][:instructor_comp_test].blank?
       flash[:danger]="無効なデータがあった為、申請をキャンセルしました"
-    elsif @attendance.update_attributes(comp_request_params)
+    elsif @attendance.update(comp_request_params)
       if @attendance.change_comp?
-        @attendance.update_attributes(change_comp:false)
+        @attendance.update(change_comp:false)
       end
       flash[:success]="申請しました"
     end
@@ -163,7 +163,7 @@ class AttendancesController < ApplicationController
     ActiveRecord::Base.transaction do
       comp_permit_params.each do |id, item|
         attendance = Attendance.find(id)
-        attendance.update_attributes!(item)
+        attendance.update!(item)
       end
     end
     flash[:success] = "変更内容を送信しました"

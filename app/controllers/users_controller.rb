@@ -47,7 +47,7 @@ class UsersController < ApplicationController
   end
   
   def update
-    if @user.update_attributes(user_params)
+    if @user.update(user_params)
       flash[:success]="ユーザー情報を編集しました"
       redirect_to @user
     else
@@ -64,7 +64,7 @@ class UsersController < ApplicationController
   
   def update_basic_info
     @user=User.find(params[:id])
-    if @user.update_attributes(basic_info_params)
+    if @user.update(basic_info_params)
       flash[:success]="基本情報を編集しました"
     end
     redirect_to users_url

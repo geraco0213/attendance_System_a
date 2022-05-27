@@ -30,7 +30,7 @@ class PlacesController < ApplicationController
   
   
   def update
-    if @place.update_attributes(place_params)
+    if @place.update(place_params)
      flash[:success]="更新しました"
      redirect_to places_url
     else
