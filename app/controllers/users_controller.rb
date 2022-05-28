@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :correct_general_user, only:[:edit, :update]
   before_action :admin_user, only:[:index,:destroy, :update_basic_info]
   before_action :correct_general_or_superior_user, only: :show  
-  before_action :set_one_month, only: :show
+  before_action :set_one_month, only: [:show]
   
   
   def new
