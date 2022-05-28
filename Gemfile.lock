@@ -226,7 +226,7 @@ DEPENDENCIES
   pg (~> 1.1)
   pry-rails
   puma
-  rails (~> 6.1.6)
+  rails (>= 5.1.6)
   rails-i18n
   ransack
   roo
